@@ -3,8 +3,95 @@
 <head>
   <meta charset="utf-8"/>
   <title>Add a Medication</title>
+  <style>
+
+    #window {
+      width: 19em;
+      border: 1px solid black;
+    }
+
+    #image {
+      height: 4em;
+      width: 4em;
+      border: 1px solid black;
+      float: left;
+    }
+
+    #drugName {
+      width: 70%;
+      height: 1.5em;
+      margin-bottom: 0.2em;
+      font-size: 16pt;
+    }
+
+    #genericName {
+      width: 95%;
+    }
+
+    #auxWarningss {
+      width: 98%;
+    }
+  </style>
 </head>
 <body>
-  Add a Medication
+  <div id="window">
+    <h1>Add a medication</h1>
+    <form>
+      <div id="image">Img</div>
+      <input type="text" id="drugName" name="drugName" placeholder="Drug name"><br/>
+      <input type="radio" name="genericOrBrand" value="generic"> Generic
+      <input type="radio" name="genericOrBrand" value="brandName"> Brand name<br/>
+      <input type="text" id="genericName" name="genericName" placeholder="Generic name"><br/>
+      <span>Strength </span><input type="text" id="strength" name="strength">
+      <select id="unit" name="unit">
+        <option value="mg">mg</option>
+        <option value="g">g</option>
+        <option value="mcg">mcg</option>
+        <option value="mL">mL</option>
+        <option value="L">L</option>
+        <option value="spray">spray</option>
+        <option value="puff">puff</option>
+        <option value="drop">drop</option>
+        <option value="tab">tab</option>
+        <option value="cap">cap</option>
+      </select><br/>
+      <span>Frequency</span>
+      <select id="frequency" name="frequency">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+      <span> time(s) per </span>
+      <select id="timeUnit" name="timeUnit">
+          <option value="day" selected>day</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+        </select><br/>
+      <span>Dosing times </span><input type="checkbox" id="asNeeded" name="asNeeded"><span> as needed</span><br/>
+      <input type="time"><input type="radio" name="amPm" value="am"> am <input type="radio" name="amPm" value="pm"> pm<br/>
+      <span>Auxiliary warnings</span>
+      <select id="auxWarnings" name="auxWarnings" multiple size="3">
+        <option value="takeWithFood">Take with food</option>
+        <option value="takeEmptyStomach">Take on an empty stomach</option>
+        <option value="doNotCrush">Do not split or crush</option>
+        <option value="takeWithWater">Take with plenty of water</option>
+        <option value="drowsy">May cause drowsiness</option>
+        <option value="fridge">Keep in refrigerator</option>
+        <option value="shake">Shake well</option>
+        <option value="noAlcohol">Do not drink alcohol while taking this medication</option>
+        <option value="protectLight">Protect from light</option>
+        <option value="noGrapefruit">Do not consume grapefruit while taking this medication</option>
+        <option value="external">For external use only</option>
+        <option value="inhale">For inhalation only</option>
+      </select>
+      <input type="reset" value="Reset"><input type="button" value="Cancel"><input type="submit" value="OK">
+    </form>
+
+  </div>
 </body>
 </html>
