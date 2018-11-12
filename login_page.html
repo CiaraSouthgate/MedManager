@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MedManager</title>
+        <meta charset="utf-8"/>
+        <style>
+            body {
+                display: flex;
+            }
+            #main {
+                margin: 0 auto;
+                text-align: center;
+                display: inline-block;
+                align-items: center;
+                width: 250px;
+            }
+            h1 {
+                margin-bottom: 10px;
+            }
+            fieldset {
+                border: 0;
+            }
+            input {
+                margin: 5px;
+                padding: 2px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>Med Manager</h1>
+            <fieldset>
+                <form action="main_page"> 
+                    <input type="text" placeholder="Email" required><br>
+                    <input type="password" placeholder="Password" required><br>
+                    <input type="submit" value="Log In"><br>
+                </form>
+            </fieldset>
+            <p>Don't Have an Account?</p>
+            <a href = "signup_page.html">Sign Up</a>
+        </div>
+    </body>
+    
+</html>
