@@ -27,10 +27,18 @@ h1 {
 }
 
 aside {
-  float: left;
   width: 100%;
   border: 1px solid black;
   display: block;
+}
+
+.content {
+  width: 90%;
+  height: 100%;
+  margin: auto;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  padding: 10px;
 }
 
 div.period {
