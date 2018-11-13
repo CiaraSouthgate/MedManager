@@ -4,6 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Open Sans";
 }
 
 body.login {
@@ -93,7 +94,14 @@ fieldset.login {
 }
 
 input {
-  margin: 5px;
+  margin: 3px;
   padding: 2px;
   border-radius: 3px;
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+input.button {
+  background-color: white;
+  margin-top: 10px;
 }
