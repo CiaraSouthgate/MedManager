@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,6 +26,7 @@ img.icon {
   width: auto;
   float: right;
   display: inline-block;
+  vertical-align: middle;
 }
 
 .nav {
@@ -32,14 +35,22 @@ img.icon {
 }
 
 h1 {
-  color: white;
   display: inline-block;
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: bold;
+}
+
+header > h1 {
+  color: white;
+  margin: auto;
 }
 
 aside {
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, .5);
   display: block;
+  box-shadow: 0 1px 3px;
 }
 
 .content {
@@ -53,9 +64,27 @@ aside {
 
 div.period {
   border-bottom: dotted 1px black;
+  display: inline-block;
 }
 
 .med {
   margin-left: 30px;
   border-bottom: 1px solid black;
+}
+
+#main {
+  margin: auto;
+  text-align: center;
+  align-items: center;
+  width: 250px;
+}
+
+fieldset.login {
+  border: 0;
+}
+
+input {
+  margin: 5px;
+  padding: 2px;
+  border-radius: 3px;
 }
