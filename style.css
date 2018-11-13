@@ -8,8 +8,17 @@
 
 body.login {
   height: 100%;
-  background-image: url(images/background.jpg);
-  background-size: cover;
+}
+
+#background {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-image: url(images/backgroundlarge.jpg);
+  background-size: 1750px;
+  background-repeat: no-repeat;
   background-position: bottom left;
 }
 
@@ -73,7 +82,7 @@ div.period {
 }
 
 #main {
-  margin: auto;
+  margin: 15px auto;
   text-align: center;
   align-items: center;
   width: 250px;
