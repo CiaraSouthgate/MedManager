@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <style>
     #image {
       height: 4em;
@@ -65,16 +66,16 @@
   <body>
     <header>
       <h1>MedManager</h1>
-      <img class="icon" alt="med icon" src=images/drugsicon.png>
+      <img class="icon" alt="med icon" src=images/drugsblue.png>
     </header>
     <aside>
       <!-- <a class="nav">Add New Medication</a> -->
-      <button id="addMed">Add a Medication</button>
-      <a class="nav">Manage Medication List</a>
+      <button id="addMed"><span class="fas fa-plus-square fa-lg"></span> Add a Medication</button>
+      <button id="test">Magical Test Button!</button>
     </aside>
     <div id="background"></div>
     <div class="content">
-      <div class="period">
+      <div class="period" id="morning">
         <h2>Morning</h2>
         <h3>00:00xm</h3>
         <div class="med">
@@ -82,29 +83,17 @@
           <span>Notes here</span>
         </div>
       </div>
-      <div class="period">
+      <div class="period" id="afternoon">
         <h2>Afternoon</h2>
-        <h3>00:00xm</h3>
-        <div class="med">
-          <input type="checkbox"> Medication Name<br>
-          <span>Notes here</span>
-        </div>
+        
       </div>
-      <div class="period">
+      <div class="period" id="evening">
         <h2>Evening</h2>
-        <h3>00:00xm</h3>
-        <div class="med">
-          <input type="checkbox"> Medication Name<br>
-          <span>Notes here</span>
-        </div>
+        
       </div>
-      <div class="period">
+      <div class="period" id="night">
         <h2>Night</h2>
-        <h3>00:00xm</h3>
-        <div class="med">
-          <input type="checkbox"> Medication Name<br>
-          <span>Notes here</span>
-        </div>
+        
       </div>
     </div>
     <div id="modal">
@@ -165,7 +154,7 @@
                 <option value="external">For external use only</option>
                 <option value="inhale">For inhalation only</option>
               </select>
-              <input type="reset" value="Reset" class="button"><input type="button" value="Cancel" class="button" id="cancel"><input type="submit" value="OK" class="button">
+              <input type="reset" value="Reset" class="button"><input type="button" value="Cancel" class="button" id="cancel"><input type="submit" value="OK" class="button" id="ok">
             </form>
         </div>
     </div>
@@ -181,6 +170,29 @@
     $("#cancel").click(function() {
       $("#modal").css("display", "none");
       $("#blur").css("display", "none");
+    });
+      
+    $("#test").click(function() {
+      var aft = document.getElementById("afternoon");
+      var timeBlock = document.createElement("div");
+      var time = "3:00 pm";
+      var timeSpot = document.createElement("h3");
+      timeSpot.innerHTML = time;
+      var med = document.createElement("div");
+      $(med).addClass("med");
+      var name = "Ibuprofen";
+      var notes = "Take with food";
+      med.innerHTML = "<input type=\"checkbox\">"
+      var nameSpot = document.createElement("span");
+      var notesSpot = document.createElement("p");
+      nameSpot.innerHTML = name;
+      notesSpot.innerHTML = notes;
+      aft.appendChild(timeBlock);
+      timeBlock.appendChild(timeSpot);
+      timeBlock.appendChild(med);
+      med.appendChild(nameSpot);
+      med.appendChild(notesSpot);
+      
     });
 
     $("#generic").click(function() {

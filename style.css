@@ -25,18 +25,19 @@ body.login {
 
 header {
   width: 100%;
-  background-color: #02AFD1;
-  height: 100px;
+  background-color: white;
+  height: 60px;
   display: block;
   clear: both;
 }
 
 img.icon {
-  height: 100px;
+  height: 50px;
   width: auto;
   float: right;
   display: inline-block;
   vertical-align: middle;
+  margin: 5px;
 }
 
 .nav {
@@ -52,34 +53,52 @@ h1 {
 }
 
 header > h1 {
-  color: white;
-  margin: auto;
+  color: #017990;
+  margin: 5px;
 }
 
 aside {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, .5);
+  /*border-top: 1px solid rgba(0, 0, 0, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);*/
   display: block;
-  box-shadow: 0 1px 3px;
+  box-shadow: 0 1px 2px grey;
+  background-color: #017990;
+  color: white;
+}
+
+#addMed {
+  color: white;
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 16pt;
+  left: 0;
+  position: relative;
+  background: none;
 }
 
 .content {
-  width: 90%;
   height: 100%;
   margin: auto;
-  border-left: 1px solid grey;
-  border-right: 1px solid grey;
   padding: 10px;
 }
 
 div.period {
-  border-bottom: dotted 1px black;
-  display: inline-block;
+  border: solid 1px grey;
+  display: block;
+  background-color: rgba(255, 255, 255, .75);
+  margin: 10px;
+  border-radius: 5px;
+  padding: 3px;
 }
 
 .med {
   margin-left: 30px;
-  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.med > p {
+  margin: 0;
 }
 
 #main {
