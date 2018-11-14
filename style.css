@@ -18,9 +18,10 @@ body.login {
   bottom: 0;
   width: 100%;
   background-image: url(images/backgroundlarge.jpg);
-  background-size: 1750px;
+  background-size: 1600px;
   background-repeat: no-repeat;
   background-position: bottom left;
+  position: fixed;
 }
 
 header {
@@ -75,6 +76,7 @@ aside {
   left: 0;
   position: relative;
   background: none;
+  border: none;
 }
 
 .content {
@@ -123,4 +125,10 @@ input {
 input.button {
   background-color: white;
   margin-top: 10px;
+}
+
+#test {
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  color: white;
+  font-weight: bold;
 }
