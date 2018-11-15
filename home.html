@@ -186,30 +186,26 @@
     $("#cancel").click(function() {
       $("#modal").css("display", "none");
     });
-    
-    var medName;
-    var genericName;
-    var strength;
-    var unit;
-    var notes;
 
     $("#ok").click(function() {
-      medName = $("#drugName").val();
-      genericOrBrand = $("input[name='genericOrBrand']:checked").val();
-      genericName = $("#genericName").val();
-      strength = $("#strength").val();
-      unit = $("#unit").val();
-      notes = $("#auxWarnings").val();
+      var medName = $("#drugName").val();
+      var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
+      var genericName = $("#genericName").val();
+      var strength = $("#strength").val();
+      var unit = $("#unit").val();
+      var frequency = $("#frequency").val();
+      var timeUnit = $("#timeUnit").val();
+      var auxWarnings = $("#auxWarnings").val();
       
       console.log(medName);
       console.log(genericOrBrand);
       console.log(genericName);
       console.log(strength);
       console.log(unit);
-      console.log(notes);
-    })
-      
-    console.log(medName);
+      console.log(frequency);
+      console.log(timeUnit);
+      console.log(auxWarnings);
+    });
       
     // var medsRef = firebase.database().ref("meds/");
 
