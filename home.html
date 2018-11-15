@@ -103,9 +103,9 @@
             <form>
               <div id="image">Img</div>
               <input type="text" id="drugName" name="drugName" placeholder="Drug name"><br/>
-              <input type="radio" name="genericOrBrand" value="generic" id="generic" checked> Generic
+              <input type="radio" name="genericOrBrand" value="generic" id="generic"> Generic
               <input type="radio" name="genericOrBrand" value="brandName" id="brandName"> Brand name<br/>
-              <input type="text" id="genericName" name="genericName" placeholder="Generic name" pattern="[a-zA-Z]"><br/>
+              <input type="text" id="genericName" name="genericName" placeholder="Generic name"><br/>
               <span>Strength </span><input type="text" id="strength" name="strength" placeholder ="0">
               <select id="unit" name="unit">
                 <option value="mg">mg</option>
@@ -138,6 +138,7 @@
                 </select><br/>
               <span>Dosing times </span><input type="checkbox" id="asNeeded" name="asNeeded"><span> as needed</span><br/>
               <div id="times">
+                <div class='timeSlot'><input type='time'><input type='radio' name='amPm' value='am'> am <input type='radio' name='amPm' value='pm'> pm<br/></div>
               </div>
               
               <span>Auxiliary warnings</span>
@@ -176,43 +177,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script>
-    var medName;
-    var generic;
-    var strength;
-    var unit;
-    var notes;
+    
     
     $("#addMed").click(function() {
       $("#modal").css("display", "block");
-      $("#blur").css("display", "block");
     });
 
     $("#cancel").click(function() {
       $("#modal").css("display", "none");
-      $("#blur").css("display", "none");
     });
-      
+    
+    var medName;
+    var genericName;
+    var strength;
+    var unit;
+    var notes;
+
     $("#ok").click(function() {
-      medName = document.getElementById("drugName").value;
-      generic = document.getElementById("genericName").value;
-      strength = document.getElementById("strength").value;
-      unit = document.getElementById("unit").value;
-      notes = document.getElementById("auxWarnings").value;
+      medName = $("#drugName").val();
+      genericOrBrand = $("input[name='genericOrBrand']:checked").val();
+      genericName = $("#genericName").val();
+      strength = $("#strength").val();
+      unit = $("#unit").val();
+      notes = $("#auxWarnings").val();
+      
       console.log(medName);
+      console.log(genericOrBrand);
+      console.log(genericName);
+      console.log(strength);
+      console.log(unit);
+      console.log(notes);
     })
       
     console.log(medName);
       
-    var medsRef = firebase.database().ref("meds/");
+    // var medsRef = firebase.database().ref("meds/");
 
-    medsRef.set ({
-       medName: {
-          name: medName,
-          generic: generic,
-          strength: strength,
-          notes: notes
-       }
-    });
+    // medsRef.set ({
+    //    medName: {
+    //       name: medName,
+    //       generic: generic,
+    //       strength: strength,
+    //       notes: notes
+    //    }
+    // });
       
     $("#test").click(function() {
       var aft = document.getElementById("afternoon");
@@ -235,14 +243,6 @@
       med.appendChild(nameSpot);
       med.appendChild(notesSpot);
       
-    });
-
-    $("#generic").click(function() {
-      $("#genericName").css("display", "initial");
-    });
-
-    $("#brandName").click(function() {
-      $("#genericName").css("display", "none");
     });
 
     function populateTimes() {
