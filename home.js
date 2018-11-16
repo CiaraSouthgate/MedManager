@@ -102,6 +102,7 @@
         "asNeeded": asNeeded
       });
     });
+    retrieveAllMeds();
     $("#modal").css("display", "none");
   });
 
