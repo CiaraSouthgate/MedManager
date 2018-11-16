@@ -1,4 +1,4 @@
-$(document).ready(function() {
+// $(document).ready(function() {
   $("#addMed").click(function() {
     $("#modal").css("display", "block");
   });
@@ -7,59 +7,13 @@ $(document).ready(function() {
     $("#modal").css("display", "none");
   });
 
-  allMeds = [];
-
-  function retrieveAllMeds(){
-    var userId = firebase.auth().currentUser.uid;
-    var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
-      medsRef.once('value', function (snap) {
-        snap.forEach(function (childSnap) {
-          allMeds.push(childSnap.val());
-        });
-      });
-  }
-
-  $("#ok").click(function() {
-    var medName = $("#drugName").val();
-    var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
-    var genericName = $("#genericName").val();
-    var strength = $("#strength").val();
-    var unit = $("#unit").val();
-    var frequency = $("#frequency").val();
-    var timeUnit = $("#timeUnit").val();
-    var auxWarnings = $("#auxWarnings").val();
-
-    var database = firebase.database();
-    firebase.auth().onAuthStateChanged(function(user){
-      firebase.database().ref("users/" + user.uid + "/meds/" + medName).update( {
-        "medName": medName,
-        "genericOrBrand": genericOrBrand,
-        "genericName": genericName,
-        "strength": strength,
-        "unit": unit,
-        "frequency": frequency,
-        "timeUnit": timeUnit,
-        "auxWarnings": auxWarnings
-      });
-    });
-    // console.log(medName);
-    // console.log(genericOrBrand);
-    // console.log(genericName);
-    // console.log(strength);
-    // console.log(unit);
-    // console.log(frequency);
-    // console.log(timeUnit);
-    // console.log(auxWarnings);
-    retrieveAllMeds();
-    console.log(allMeds);
-    $("#modal").css("display", "none");
-  });
+  
 
   function populateTimes() {
     var dosingTimes = 0;
     dosingTimes = $("#frequency option:selected").text();
     for (var i = 1; i <= dosingTimes; i++) {
-      $("#times").append("<div class='timeSlot'><input type='time'><input type='radio' name='amPm' value='am'> am <input type='radio' name='amPm' value='pm'> pm<br/></div>");
+      $("#times").append("<div class='timeSlot'><input type='time'><input type='radio' name='amPm" + i +"' value='am'> am <input type='radio' name='amPm" + i + "' value='pm'> pm<br/></div>");
     }
   }
 
@@ -81,7 +35,75 @@ $(document).ready(function() {
        asNeeded = false;
        populateTimes();
      }
-     });
+  });
+
+  var database = firebase.database();
+
+  var allMeds = [];
+
+  function retrieveAllMeds(){
+    allMeds = [];
+    firebase.auth().onAuthStateChanged(function(user){
+    var userId = firebase.auth().currentUser.uid;
+    var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
+      medsRef.once('value', function (snap) {
+        snap.forEach(function (childSnap) {
+          allMeds.push(childSnap.val());
+        });
+      });
+    });
+  }
+
+  retrieveAllMeds();
+
+  $("#ok").click(function() {
+    var medName = $("#drugName").val();
+    var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
+    var genericName = $("#genericName").val();
+    var strength = $("#strength").val();
+    var unit = $("#unit").val();
+    var frequency = $("#frequency").val();
+    var timeUnit = $("#timeUnit").val();
+    var auxWarnings = $("#auxWarnings").val();
+    var times = [];
+    var amPm = [];
+
+    function getTimes() {
+      var time = $(".timeSlot input[type='time']");
+      for (var i = 0; i < time.length; i++) {
+      times.push(time[i].value);
+      }
+    }
+
+    function getAmPm() {
+      amPm = [];
+      var time = $(".timeSlot input[type='radio']:checked");
+      for (var i = 0; i < time.length; i++) {
+      amPm.push(time[i].value);
+      }
+    }
+
+    getTimes();
+    getAmPm();
+
+    var database = firebase.database();
+    firebase.auth().onAuthStateChanged(function(user){
+      firebase.database().ref("users/" + user.uid + "/meds/" + medName).update( {
+        "medName": medName,
+        "genericOrBrand": genericOrBrand,
+        "genericName": genericName,
+        "strength": strength,
+        "unit": unit,
+        "frequency": frequency,
+        "timeUnit": timeUnit,
+        "times": times,
+        "amPm": amPm,
+        "auxWarnings": auxWarnings,
+        "asNeeded": asNeeded
+      });
+    });
+    $("#modal").css("display", "none");
+  });
 
   $("#test").click(function() {
   var aft = document.getElementById("afternoon");
@@ -110,4 +132,3 @@ $(document).ready(function() {
       window.location = "index.html";
     });
   });
-});
