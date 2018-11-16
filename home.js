@@ -7,14 +7,13 @@
     $("#modal").css("display", "none");
   });
 
-  
-
   function populateTimes() {
     var dosingTimes = 0;
     dosingTimes = $("#frequency option:selected").text();
     for (var i = 1; i <= dosingTimes; i++) {
-      $("#times").append("<div class='timeSlot'><input type='time'><input type='radio' name='amPm" + i +"' value='am'> am <input type='radio' name='amPm" + i + "' value='pm'> pm<br/></div>");
+      $("#times").append("<div class='timeSlot'><input class='timepicker' placeholder='8:00 AM'></div>");
     }
+    enableTimepicker();
   }
 
   $("#frequency").change(function() {
@@ -36,6 +35,22 @@
        populateTimes();
      }
   });
+
+  function enableTimepicker() {
+    $('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 30,
+    minTime: '12:00am',
+    maxTime: '11:30pm',
+    defaultTime: '8:00am',
+    startTime: '8:00am',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+    });
+  }
+  
+  enableTimepicker();
 
   var database = firebase.database();
 
@@ -69,22 +84,13 @@
     var amPm = [];
 
     function getTimes() {
-      var time = $(".timeSlot input[type='time']");
+      var time = $(".timepicker");
       for (var i = 0; i < time.length; i++) {
       times.push(time[i].value);
       }
     }
 
-    function getAmPm() {
-      amPm = [];
-      var time = $(".timeSlot input[type='radio']:checked");
-      for (var i = 0; i < time.length; i++) {
-      amPm.push(time[i].value);
-      }
-    }
-
     getTimes();
-    getAmPm();
 
     var database = firebase.database();
     firebase.auth().onAuthStateChanged(function(user){
@@ -97,7 +103,6 @@
         "frequency": frequency,
         "timeUnit": timeUnit,
         "times": times,
-        "amPm": amPm,
         "auxWarnings": auxWarnings,
         "asNeeded": asNeeded
       });
