@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 #image {
   height: 4em;
   width: 4em;
@@ -45,10 +51,13 @@ input[type="radio"] {
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
 }
-  #modal-content {
+
+#modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 23em;
+  border-radius: 5px;
+  display: table;
 }
