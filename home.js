@@ -112,25 +112,26 @@
   });
 
   $("#test").click(function() {
-  var aft = document.getElementById("afternoon");
-  var timeBlock = document.createElement("div");
-  var time = "3:00 pm";
-  var timeSpot = document.createElement("h3");
-  timeSpot.innerHTML = time;
-  var med = document.createElement("div");
-  $(med).addClass("med");
-  var name = "Ibuprofen";
-  var notes = "Take with food";
-  med.innerHTML = "<input type=\"checkbox\">"
-  var nameSpot = document.createElement("span");
-  var notesSpot = document.createElement("p");
-  nameSpot.innerHTML = name;
-  notesSpot.innerHTML = notes;
-  aft.appendChild(timeBlock);
-  timeBlock.appendChild(timeSpot);
-  timeBlock.appendChild(med);
-  med.appendChild(nameSpot);
-  med.appendChild(notesSpot);
+    console.log(retrieveAllMeds());
+    var aft = document.getElementById("afternoon");
+    var timeBlock = document.createElement("div");
+    var time = "3:00 pm";
+    var timeSpot = document.createElement("h3");
+    timeSpot.innerHTML = time;
+    var med = document.createElement("div");
+    $(med).addClass("med");
+    var name = "Ibuprofen";
+    var notes = "Take with food";
+    med.innerHTML = "<input type=\"checkbox\">"
+    var nameSpot = document.createElement("span");
+    var notesSpot = document.createElement("p");
+    nameSpot.innerHTML = name;
+    notesSpot.innerHTML = notes;
+    aft.appendChild(timeBlock);
+    timeBlock.appendChild(timeSpot);
+    timeBlock.appendChild(med);
+    med.appendChild(nameSpot);
+    med.appendChild(notesSpot);
   });
 
   $("#logout").click(function() {

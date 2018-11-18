@@ -17,30 +17,28 @@
     </header>
     <aside>
       <button id="addMed"><span class="fas fa-plus-square fa-lg"></span> Add a Medication</button>
-      <button id="test">Magical Test Button!</button>
       <button id="logout">Log Out</button>
     </aside>
+    <button id="test">Magical Test Button!</button>
     <div id="background"></div>
-    <div class="content">
-      <div class="period" id="morning">
-        <h2>Morning</h2>
-        <h3>00:00xm</h3>
-        <div class="med">
-          <input type="checkbox"> Medication Name<br>
-          <span>Notes here</span>
+    <div class="container">
+      <div class="content row">
+        <div class="period col" id="morning">
+          <h2>Morning</h2>
+          <h3>00:00xm</h3>
+          <div class="med">
+            <input type="checkbox"> Medication Name<br>
+            <span>Notes here</span>
+          </div>
         </div>
-      </div>
-      <div class="period" id="afternoon">
-        <h2>Afternoon</h2>
-        
-      </div>
-      <div class="period" id="evening">
-        <h2>Evening</h2>
-        
-      </div>
-      <div class="period" id="night">
-        <h2>Night</h2>
-        
+        <div class="period col" id="afternoon">
+          <h2>Afternoon &amp; Evening</h2>
+
+        </div>
+        <div class="period col" id="night">
+          <h2>Night</h2>
+
+        </div>
       </div>
     </div>
     <div id="modal">
