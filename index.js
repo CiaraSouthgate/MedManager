@@ -23,9 +23,9 @@ var uiConfig = {
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
   ],
   // Terms of service url.
-  tosUrl: 'home.html',
+  tosUrl: 'terms.html',
   // Privacy policy url.
-  privacyPolicyUrl: 'home.html'
+  privacyPolicyUrl: 'privacy.html'
 };
 
 // The start method will wait until the DOM is loaded.

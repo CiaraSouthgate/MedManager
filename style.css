@@ -64,6 +64,15 @@ aside {
   box-shadow: 0 1px 2px grey;
   background-color: #017990;
   color: white;
+  min-height: 25px;
+}
+
+aside a {
+  color: white;
+  text-align: right;
+  float: right;
+  margin-right: 5px;
+  font-weight: bold;
 }
 
 #addMed {
@@ -106,6 +115,19 @@ div.period {
   text-align: center;
   align-items: center;
   width: 250px;
+}
+
+#mainText {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, .5);
+  text-align: justify;
+  font-size: 10pt;
+}
+
+#mainText p {
+  margin: 0;
 }
 
 fieldset.login {
