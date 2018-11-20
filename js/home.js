@@ -1,15 +1,14 @@
-// $(document).ready(function() {
-//Makes add med window appear
+// Makes add med window appear
 $("#addMed").click(function() {
   $("#modal").css("display", "block");
 });
 
-//Makes add med window disappear
+// Makes add med window disappear
 $("#cancel").click(function() {
   $("#modal").css("display", "none");
 });
 
-//Takes frequency, makes coordinating amount of time slots appear.
+//Takes frequency, makes coordinating amount of time slots appear
 function populateTimes() {
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
@@ -18,7 +17,6 @@ function populateTimes() {
   }
   enableTimepicker();
 }
-
 
 $("#frequency").change(function() {
   $("#times").html("");
@@ -41,7 +39,7 @@ $('#asNeeded').change(function(){
    }
 });
 
-//Populates list of times
+// Creates timepicker
 function enableTimepicker() {
   $('.timepicker').timepicker({
   timeFormat: 'h:mm p',
@@ -62,7 +60,7 @@ var database = firebase.database();
 
 var allMeds = [];
 
-//Runs when page loads, draws from database
+// Draws list of meds from database
 function retrieveAllMeds(){
   allMeds = [];
   firebase.auth().onAuthStateChanged(function(user){
@@ -98,7 +96,7 @@ function addMeds(){
 
   getTimes();
 
-  //Retrieves all meds, closes window
+  // Creates an object for each med in the database
   var database = firebase.database();
   firebase.auth().onAuthStateChanged(function(user){
     firebase.database().ref("users/" + user.uid + "/meds/" + medName).update( {
@@ -117,13 +115,32 @@ function addMeds(){
   retrieveAllMeds();
 }
 
-//Adds a med, doesn't close the window
+// Checks if the med is already in the medication list
+function checkMeds() {
+  var thisMedName = $("#drugName").val();
+  for (let i = 0; i < allMeds.length; i++) {
+    if (allMeds[i].medName == thisMedName) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Prompts user if they want to overwrite a med if it already exists
+// Adds a med, doesn't close window. 
 $("#add").click(function() {
+  if (checkMeds()) {
+    alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
+  }
   addMeds();
 });
 
-//Adds a med, closes the window
+// Prompts user if they want to overwrite a med if it already exists
+// Adds a med, closes window. 
 $("#addClose").click(function() {
+  if (checkMeds()) {
+    alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
+  }
   addMeds();
   $("#modal").css("display", "none");
 });
