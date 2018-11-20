@@ -67,7 +67,7 @@ function retrieveAllMeds(){
   allMeds = [];
   firebase.auth().onAuthStateChanged(function(user){
   var userId = firebase.auth().currentUser.uid;
-  var medsRef = database.ref('/users/' + userId + "/meds/");
+  var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
     medsRef.once('value', function (snap) {
       snap.forEach(function (childSnap) {
         allMeds.push(childSnap.val());
