@@ -51,6 +51,15 @@ h1 {
   font-weight: bold;
 }
 
+h2 {
+  font-size: 18pt;
+}
+
+h3 {
+  color: rgba(0,0,0,.5);
+  font-size: 14pt;
+}
+
 header > h1 {
   color: #017990;
   margin: 5px;
@@ -89,6 +98,10 @@ div.period {
   border-radius: 5px;
   padding: 3px;
   min-width: 300px;
+}
+
+.timeDiv {
+  margin-left: 1em;
 }
 
 .med {
