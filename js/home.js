@@ -76,8 +76,6 @@ function retrieveAllMeds(){
   });
 }
 
-retrieveAllMeds();
-
 function addMeds(){
   //Creates variable for each field, stores to database
   var medName = $("#drugName").val();
@@ -160,6 +158,8 @@ function createTimeDivs() {
       str = str.substring(1);
     }
     let timeDiv = document.createElement("div");
+    $(timeDiv).addClass("timeDiv");
+    $(timeDiv).attr("id", str);
     let divHead = document.createElement("h3");
     divHead.innerHTML = str;
     timeDiv.append(divHead);
@@ -186,6 +186,9 @@ function setTimes(medTimes) {
           hr += 12;
         } else if (time.substring(6, 8) == "AM" && hr == 12) {
           hr = 0;
+        }
+        if (hr < 6) {
+          hr += 24;
         }
         var medTime = [hr, min, time];
         var found;
@@ -214,7 +217,7 @@ function populateMeds() {
   createTimeDivs();
 }
 
-populateMeds();
+$.when(retrieveAllMeds()).then(populateMeds());
 
 //Magical test button
 $("#test").click(function() {
@@ -245,3 +248,5 @@ $("#logout").click(function() {
     window.location = "index.html";
   });
 });
+
+window.setTimeout(populateMeds, 1000);
