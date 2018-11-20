@@ -13,7 +13,7 @@ $("#cancel").click(function() {
 function populateTimes() {
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
-  for (var i = 1; i <= dosingTimes; i++) {
+  for (let i = 1; i <= dosingTimes; i++) {
     $("#times").append("<div class='timeSlot'><input class='timepicker' placeholder='8:00 AM'></div>");
   }
   enableTimepicker();
@@ -130,15 +130,88 @@ $("#addClose").click(function() {
   $("#modal").css("display", "none");
 });
 
-function populateMeds() {
+var existingTimes = [];
 
+function createMedDiv(name, genOrBrand, genName, str, un, freq, time, times, aux, asNeeded) {
+  
+}
+
+function Comparator(a, b) {
+  if (a[0] < b[0]) return -1;
+  if (a[0] > b[0]) return 1;
+  return 0;
+}
+
+function createTimeDivs() {
+  existingTimes.sort(Comparator);
+  console.log(existingTimes);
+  for (let i = 0; i < existingTimes.length; i++) {
+    let time = existingTimes[i];
+    let hr = time[0];
+    let min = time[1];
+    let str = time[2];
+    if (str[0] == 0) {
+      str = str.substring(1);
+    }
+    let timeDiv = document.createElement("div");
+    let divHead = document.createElement("h3");
+    divHead.innerHTML = str;
+    timeDiv.append(divHead);
+    rawTime = hr + (min / 60);
+    if (rawTime >= 6 && rawTime < 12) {
+      $("#morning").append(timeDiv);
+    } else if (rawTime >= 12 && rawTime < 22) {
+      $("#afternoon").append(timeDiv);
+    } else {
+      $("#night").append(timeDiv);
+    }
+  }
+}
+
+function setTimes(medTimes) {
+  for (let j = 0; j < medTimes.length; j++) {
+        let time = medTimes[j];
+        if (time.length < 8) {
+          time = "0" + time;
+        }
+        let hr = parseInt(time.substring(0, 2));
+        let min = parseInt(time.substring(3, 5));
+        if (time.substring(6, 8) == "PM" && hr < 12) {
+          hr += 12;
+        } else if (time.substring(6, 8) == "AM" && hr == 12) {
+          hr = 0;
+        }
+        var medTime = [hr, min, time];
+        var found;
+        for (let k = 0; k < existingTimes.length; k++) {
+          found = false;
+          let check = existingTimes[k];
+          if (check[0] == hr && check[1] == min) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          existingTimes.push(medTime);
+        }
+      }
+}
+
+function populateMeds() {
+  for (let i = 0; i < allMeds.length; i++) {
+    let current = allMeds[i];
+    var medName = current.medName;
+    if (!current.asNeeded) {
+      setTimes(current.times);
+    }
+  }
+  createTimeDivs();
 }
 
 populateMeds();
 
 //Magical test button
 $("#test").click(function() {
-  console.log(retrieveAllMeds());
   var aft = document.getElementById("afternoon");
   var timeBlock = document.createElement("div");
   var time = "3:00 pm";
