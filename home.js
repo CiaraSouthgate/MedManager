@@ -1,12 +1,15 @@
 // $(document).ready(function() {
+  //Makes add med window appear
   $("#addMed").click(function() {
     $("#modal").css("display", "block");
   });
 
+  //Makes add med window disappear
   $("#cancel").click(function() {
     $("#modal").css("display", "none");
   });
 
+  //Takes frequency, makes coordinating amount of time slots appear.
   function populateTimes() {
     var dosingTimes = 0;
     dosingTimes = $("#frequency option:selected").text();
@@ -16,6 +19,7 @@
     enableTimepicker();
   }
 
+  
   $("#frequency").change(function() {
     $("#times").html("");
     $("#frequency option:selected").each(function() {
@@ -25,6 +29,7 @@
     });
   });
 
+  //If med is "as needed", no times appear
   var asNeeded = false;
   $('#asNeeded').change(function(){
      $("#times").html("");
@@ -36,6 +41,7 @@
      }
   });
 
+  //Populates list of times
   function enableTimepicker() {
     $('.timepicker').timepicker({
     timeFormat: 'h:mm p',
@@ -56,11 +62,12 @@
 
   var allMeds = [];
 
+  //Runs when page loads, draws from database
   function retrieveAllMeds(){
     allMeds = [];
     firebase.auth().onAuthStateChanged(function(user){
     var userId = firebase.auth().currentUser.uid;
-    var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
+    var medsRef = database.ref('/users/' + userId + "/meds/");
       medsRef.once('value', function (snap) {
         snap.forEach(function (childSnap) {
           allMeds.push(childSnap.val());
@@ -71,6 +78,7 @@
 
   retrieveAllMeds();
 
+  //Creates variable for each field, stores to database
   $("#ok").click(function() {
     var medName = $("#drugName").val();
     var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
@@ -81,8 +89,8 @@
     var timeUnit = $("#timeUnit").val();
     var auxWarnings = $("#auxWarnings").val();
     var times = [];
-    var amPm = [];
 
+    //Loops over time fields, adds to array within med object
     function getTimes() {
       var time = $(".timepicker");
       for (var i = 0; i < time.length; i++) {
@@ -92,6 +100,7 @@
 
     getTimes();
 
+    //Retrieves all meds, closes window
     var database = firebase.database();
     firebase.auth().onAuthStateChanged(function(user){
       firebase.database().ref("users/" + user.uid + "/meds/" + medName).update( {
@@ -111,6 +120,7 @@
     $("#modal").css("display", "none");
   });
 
+  //Magical test button
   $("#test").click(function() {
     console.log(retrieveAllMeds());
     var aft = document.getElementById("afternoon");
@@ -134,6 +144,7 @@
     med.appendChild(notesSpot);
   });
 
+  //Logout button
   $("#logout").click(function() {
     firebase.auth().signOut().then(function() {
       window.location = "index.html";
