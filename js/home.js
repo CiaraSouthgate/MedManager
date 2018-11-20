@@ -67,7 +67,7 @@ function retrieveAllMeds(){
   allMeds = [];
   firebase.auth().onAuthStateChanged(function(user){
   var userId = firebase.auth().currentUser.uid;
-  var medsRef = database.ref('/users/' + userId + "/meds/");
+  var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
     medsRef.once('value', function (snap) {
       snap.forEach(function (childSnap) {
         allMeds.push(childSnap.val());
@@ -78,8 +78,8 @@ function retrieveAllMeds(){
 
 retrieveAllMeds();
 
-//Creates variable for each field, stores to database
-$("#ok").click(function() {
+function addMeds(){
+  //Creates variable for each field, stores to database
   var medName = $("#drugName").val();
   var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
   var genericName = $("#genericName").val();
@@ -117,6 +117,16 @@ $("#ok").click(function() {
     });
   });
   retrieveAllMeds();
+}
+
+//Adds a med, doesn't close the window
+$("#add").click(function() {
+  addMeds();
+});
+
+//Adds a med, closes the window
+$("#addClose").click(function() {
+  addMeds();
   $("#modal").css("display", "none");
 });
 
@@ -229,4 +239,3 @@ $("#logout").click(function() {
     window.location = "index.html";
   });
 });
-  

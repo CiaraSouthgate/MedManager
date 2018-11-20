@@ -4,6 +4,43 @@
   padding: 0;
 }
 
+/* Add a Medication and Logout button*/
+#addMed, #logout {
+  color: white;
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 16pt;
+  left: 0;
+  position: relative;
+  background: none;
+  border: none;
+}
+
+#addMed {
+  background-color: #6ee5c7;
+  padding: 0.2em;
+  border-radius: 5px;
+  border: 2px solid #bef7e9;
+  margin: 0.1em;
+}
+
+#addMed:hover {
+  background-color: #bef7e9;
+  cursor: pointer;
+}
+
+#logout {
+  float: right;
+  font-size: 10pt;
+  margin-right: 1em;
+  margin-top: 1em;
+}
+
+#logout:hover {
+  cursor: pointer;
+}
+
+/* Modal */
 #image {
   height: 4em;
   width: 4em;
@@ -36,7 +73,15 @@ input[type="radio"] {
 }
 
 .button {
-  margin-right: 0.5em !important;
+  margin-right: 0.3em !important;
+}
+
+.addButton {
+  padding: 0.5em;
+  background-color: #017990 !important;
+  color: #FFFFFF;
+  font-weight: 700;
+  border: 2px solid #259db2;
 }
 
 #modal {
