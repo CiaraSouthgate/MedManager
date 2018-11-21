@@ -21,20 +21,20 @@ function populateTimes() {
 $("#frequency").change(function() {
   $("#times").html("");
   $("#frequency option:selected").each(function() {
-    if (asNeeded == false) {
+    if (medAsNeeded == false) {
       populateTimes();
     }
   });
 });
 
 //If med is "as needed", no times appear
-var asNeeded = false;
-$('#asNeeded').change(function(){
+var medAsNeeded = false;
+$("#medAsNeeded").change(function(){
    $("#times").html("");
-   if (asNeeded == false) {
-     asNeeded = true;
+   if (medAsNeeded == false) {
+     medAsNeeded = true;
    } else {
-     asNeeded = false;
+     medAsNeeded = false;
      populateTimes();
    }
 });
