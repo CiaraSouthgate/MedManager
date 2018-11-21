@@ -159,11 +159,11 @@ input.button {
 
 .timeDiv {
   margin-left: 1em;
-  border-top: 1px black dotted;
+  border-bottom: 1px black dotted;
 }
 
-.timeDiv:first-child {
-  border-top: none;
+.timeDiv:last-child {
+  border: none;
 }
 
 .checkbox {
