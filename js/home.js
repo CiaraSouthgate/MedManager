@@ -74,8 +74,8 @@ function retrieveAllMeds(){
   });
 }
 
+//Creates variable for each field, stores to database
 function addMeds(){
-  //Creates variable for each field, stores to database
   var medName = $("#drugName").val();
   var genericOrBrand = $("input[name='genericOrBrand']:checked").val();
   var genericName = $("#genericName").val();
@@ -85,6 +85,7 @@ function addMeds(){
   var timeUnit = $("#timeUnit").val();
   var auxWarnings = $("#auxWarnings").val();
   var times = [];
+  var isTaken = false;
 
   //Loops over time fields, adds to array within med object
   function getTimes() {
@@ -109,7 +110,8 @@ function addMeds(){
       "timeUnit": timeUnit,
       "times": times,
       "auxWarnings": auxWarnings,
-      "asNeeded": asNeeded
+      "asNeeded": asNeeded,
+      "isTaken": isTaken
     });
   });
   retrieveAllMeds();
@@ -147,10 +149,6 @@ $("#addClose").click(function() {
 
 var existingTimes = [];
 
-function createMedDiv(name, genOrBrand, genName, str, un, freq, time, times, aux, asNeeded) {
-  
-}
-
 //Sorts existing time array
 function Comparator(a, b) {
   if (a[0] < b[0]) return -1;
@@ -162,23 +160,62 @@ function Comparator(a, b) {
   }
 }
 
+function parseTime(time) {
+  if (time.length < 8) {
+      time = "0" + time;
+    }
+    let hr = parseInt(time.substring(0, 2));
+    let min = parseInt(time.substring(3, 5));
+    if (time.substring(6, 8) == "PM" && hr < 12) {
+      hr += 12;
+    } else if (time.substring(6, 8) == "AM" && hr == 12) {
+      hr = 0;
+    }
+    if (hr < 6) {
+      hr += 24;
+    }
+  return [hr, min, time];
+}
+
+function setTimes(medTimes) {
+  for (let j = 0; j < medTimes.length; j++) {
+    let time = medTimes[j];
+    var medTime = parseTime(time);
+    hr = medTime[0];
+    min = medTime[1];
+    time = medTime[2];
+    var found;
+    for (let k = 0; k < existingTimes.length; k++) {
+      found = false;
+      let check = existingTimes[k];
+      if (check[0] == hr && check[1] == min) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      existingTimes.push(medTime);
+    }
+  }
+}
+
 //Creates divs for all times that need meds
 function createTimeDivs() {
   existingTimes.sort(Comparator);
-  console.log(existingTimes);
   for (let i = 0; i < existingTimes.length; i++) {
     let time = existingTimes[i];
     let hr = time[0];
     let min = time[1];
     let str = time[2];
+    let idName = hr + "_" + min;
     if (str[0] == 0) {
       str = str.substring(1);
     }
     let timeDiv = document.createElement("div");
     $(timeDiv).addClass("timeDiv");
-    $(timeDiv).attr("id", str);
+    $(timeDiv).attr("id", idName);
     let divHead = document.createElement("h3");
-    divHead.innerHTML = str;
+    divHead.innerHTML = str.toLowerCase();
     timeDiv.append(divHead);
     rawTime = hr + (min / 60);
     if (rawTime >= 6 && rawTime < 12) {
@@ -191,47 +228,100 @@ function createTimeDivs() {
   }
 }
 
-function setTimes(medTimes) {
-  for (let j = 0; j < medTimes.length; j++) {
-        let time = medTimes[j];
-        if (time.length < 8) {
-          time = "0" + time;
-        }
-        let hr = parseInt(time.substring(0, 2));
-        let min = parseInt(time.substring(3, 5));
-        if (time.substring(6, 8) == "PM" && hr < 12) {
-          hr += 12;
-        } else if (time.substring(6, 8) == "AM" && hr == 12) {
-          hr = 0;
-        }
-        if (hr < 6) {
-          hr += 24;
-        }
-        var medTime = [hr, min, time];
-        var found;
-        for (let k = 0; k < existingTimes.length; k++) {
-          found = false;
-          let check = existingTimes[k];
-          if (check[0] == hr && check[1] == min) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          existingTimes.push(medTime);
-        }
-      }
+var warnings = {
+  takeWithFood: "Take with food",
+  takeEmptyStomach: "Take on an empty stomach",
+  doNotCrush: "Do not split or crush",
+  takeWithWater: "Take with plenty of water",
+  drowsy: "May cause drowsiness",
+  fridge: "Keep in refrigerator",
+  shake: "Shake well",
+  noAlcohol: "Do not drink alcohol while taking this medication",
+  external: "For external use only",
+  inhale: "For inhalation only"
 }
+
+function createMedDiv(med) {
+  var medDiv = document.createElement("div");
+  $(medDiv).addClass("medDiv");
+  let name = document.createElement("h2");
+  $(name).addClass("medName");
+  name.innerHTML = med.medName;
+  let gen = document.createElement("span");
+  gen.innerHTML = med.genericName;
+  $(name).append(gen);
+  let dosage = $("<p></p>");
+  dosage.append(med.strength + " " + med.unit);
+  $(dosage).addClass("dosage");
+  let notes = document.createElement("div");
+  $(notes).addClass("notes");
+  let checkBox = document.createElement("input");
+  $(checkBox).attr("type", "checkbox");
+  $(checkBox).addClass("checkbox");
+  $(medDiv).append(checkBox);
+  $(medDiv).append(name);
+  $(notes).append(dosage);
+  try {
+    for (let i = 0; i < med.auxWarnings.length; i++) {
+      let note = document.createElement("p");
+      note.innerHTML = warnings[med.auxWarnings[i]];
+      notes.appendChild(note);
+    }
+  } catch {}
+  finally {
+    $(medDiv).append(notes);
+  }
+
+  checkBox.checked = med.isTaken;
+  checkControl(checkBox, med);
+  
+  if (med.asNeeded) {
+    $("#asNeeded").append(medDiv);
+  } else {
+    $.each(med.times, function(i, val) {
+      time = med.times[i];
+      time = parseTime(time);
+      timeDiv = "#" + time[0] + "_" + time[1];
+      console.log(medDiv);
+      $(medDiv).clone().appendTo(timeDiv);
+    });
+  }
+}
+
+function checkControl(checkBox, med) {
+  $(checkBox).change(function() {
+  if ($(this).is(":checked")) {
+      firebase.auth().onAuthStateChanged(function(user){
+        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+          "isTaken": true
+        });
+      });                                                                             
+    } else {
+      firebase.auth().onAuthStateChanged(function(user){
+        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+          "isTaken": false
+        });
+      });
+    }
+  });
+}
+
 
 function populateMeds() {
   for (let i = 0; i < allMeds.length; i++) {
     let current = allMeds[i];
-    var medName = current.medName;
-    if (!current.asNeeded) {
+    if (current.asNeeded) {
+      createMedDiv(current);
+    } else {
       setTimes(current.times);
     }
   }
   createTimeDivs();
+  for (let j = 0; j < allMeds.length; j++) {
+    if (!allMeds[j].asNeeded) {
+      createMedDiv(allMeds[j]);
+    }
+  }
 }
 
 $.when(retrieveAllMeds()).then(populateMeds());
