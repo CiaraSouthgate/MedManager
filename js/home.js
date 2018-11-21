@@ -242,30 +242,34 @@ var warnings = {
 }
 
 function createMedDiv(med) {
-  var medDiv = document.createElement("div");
-  $(medDiv).addClass("medDiv");
-  let name = document.createElement("h2");
-  $(name).addClass("medName");
-  name.innerHTML = med.medName;
-  let gen = document.createElement("span");
-  gen.innerHTML = med.genericName;
-  $(name).append(gen);
+  var medDiv = $("<div></div>");
+  let name = $("<h2></h2>");
+  let gen = $("<span></span>");
   let dosage = $("<p></p>");
-  dosage.append(med.strength + " " + med.unit);
-  $(dosage).addClass("dosage");
-  let notes = document.createElement("div");
-  $(notes).addClass("notes");
-  let checkBox = document.createElement("input");
+  let notes = $("<div></div>");
+  let checkBox = $("<input></input>");
+  
   $(checkBox).attr("type", "checkbox");
-  $(checkBox).addClass("checkbox");
+  
+  $(name).append(med.medName);
+  $(gen).append(med.genericName);
+  $(name).append(gen);
+  $(dosage).append(med.strength + " " + med.unit);
   $(medDiv).append(checkBox);
   $(medDiv).append(name);
   $(notes).append(dosage);
+  
+  $(medDiv).addClass("medDiv");
+  $(name).addClass("medName");
+  $(dosage).addClass("dosage");
+  $(notes).addClass("notes");
+  $(checkBox).addClass("checkbox");
+  
   try {
     for (let i = 0; i < med.auxWarnings.length; i++) {
-      let note = document.createElement("p");
-      note.innerHTML = warnings[med.auxWarnings[i]];
-      notes.appendChild(note);
+      let note = $("<p></p>");
+      $(note).append(warnings[med.auxWarnings[i]]);
+      $(notes).append(note);
     }
   } catch {}
   finally {
