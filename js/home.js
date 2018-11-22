@@ -13,7 +13,7 @@ function populateTimes() {
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
   for (let i = 1; i <= dosingTimes; i++) {
-    $("#times").append("<div class='timeSlot'><input class='timepicker' placeholder='8:00 AM'></div>");
+    $("#times").append("<div class='timeSlot'><input class='timepicker' placeholder='8:00 AM' readonly></div>");
   }
   enableTimepicker();
 }
@@ -60,16 +60,18 @@ var database = firebase.database();
 
 var allMeds = [];
 
-// Draws list of meds from database
+// Draws list of meds from database and populates page
 function retrieveAllMeds(){
   allMeds = [];
-  firebase.auth().onAuthStateChanged(function(user){
-  var userId = firebase.auth().currentUser.uid;
-  var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
-    medsRef.once('value', function (snap) {
-      snap.forEach(function (childSnap) {
+  firebase.auth().onAuthStateChanged(function(){
+    var userId = firebase.auth().currentUser.uid;
+    var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
+    medsRef.once('value').then(function (snap) {
+      snap.forEach(function (childSnap) { 
         allMeds.push(childSnap.val());
       });
+      clearMeds();
+      populateMeds();
     });
   });
 }
@@ -110,7 +112,7 @@ function addMeds(){
       "timeUnit": timeUnit,
       "times": times,
       "auxWarnings": auxWarnings,
-      "asNeeded": asNeeded,
+      "asNeeded": medAsNeeded,
       "isTaken": isTaken
     });
   });
@@ -286,7 +288,6 @@ function createMedDiv(med) {
       time = med.times[i];
       time = parseTime(time);
       timeDiv = "#" + time[0] + "_" + time[1];
-      console.log(medDiv);
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
@@ -310,6 +311,14 @@ function checkControl(checkBox, med) {
   });
 }
 
+//Clears meds from the page so it can be refreshed with an up-to-date list from the database
+function clearMeds() {
+  $("#morning").empty();
+  $("#afternoon").empty();
+  $("#night").empty();
+  $("#asNeeded").empty();
+  existingTimes = [];
+}
 
 function populateMeds() {
   for (let i = 0; i < allMeds.length; i++) {
@@ -328,7 +337,7 @@ function populateMeds() {
   }
 }
 
-$.when(retrieveAllMeds()).then(populateMeds());
+retrieveAllMeds();
 
 //Magical test button
 $("#test").click(function() {
@@ -360,4 +369,14 @@ $("#logout").click(function() {
   });
 });
 
-window.setTimeout(populateMeds, 1000);
+
+
+//Testing clearing and repopulating page
+// $("#clearMeds").click(function() {
+//   clearMeds();
+// });
+
+// $("#getMeds").click(function() {
+//   retrieveAllMeds();
+//   populateMeds();
+// })

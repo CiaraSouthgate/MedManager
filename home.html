@@ -18,27 +18,31 @@
     </header>
     <aside>
       <button id="addMed"><i class="fas fa-plus"></i> Add a Medication</button>
+      <!-- <button id="getMeds">Get Meds</button>
+      <button id="clearMeds">Clear Meds</button> -->
       <button id="logout"><i class="fas fa-door-open"></i> Log Out</button>
     </aside>
     <button id="test">Magical Test Button!</button>
     <div id="background"></div>
     <div class="container">
       <div class="content row">
-        <div class="period col" id="morning">
+        <div class="period col">
           <h2>Morning</h2>
+          <div id="morning"></div>
         </div>
-        <div class="period col" id="afternoon">
+        <div class="period col">
           <h2>Afternoon &amp; Evening</h2>
-
+          <div id="afternoon"></div>
         </div>
-        <div class="period col" id="night">
+        <div class="period col">
           <h2>Night</h2>
-
+          <div id="night"></div>
         </div>
       </div>
       <div class="content row">
-        <div class="period col" id="asNeeded">
+        <div class="period col">
           <h2>As Needed</h2>
+          <div id="asNeeded"></div>
         </div>
       </div>
     </div>
@@ -84,7 +88,7 @@
                 </select><br/>
               <span>Dosing times </span><input type="checkbox" id="medAsNeeded" name="asNeeded"><span> as needed</span><br/>
               <div id="times">
-                <div class='timeSlot'><input class="timepicker" placeholder="8:00 AM"></div>
+                <div class='timeSlot'><input class="timepicker" placeholder="8:00 AM" readonly></div>
               </div>
               
               <span>Auxiliary warnings</span>
