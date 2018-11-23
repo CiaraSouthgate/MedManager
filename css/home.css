@@ -5,7 +5,7 @@
 }
 
 /* Add a Medication and Logout button*/
-#addMed, #logout {
+#addMed, #logout, #pharmacy {
   color: white;
   font-weight: bold;
   margin-left: 5px;
@@ -37,8 +37,9 @@
   margin-top: 1em;
 }
 
-#logout:hover {
+#logout:hover, #pharmacy:hover {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Modal */

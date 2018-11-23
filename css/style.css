@@ -168,6 +168,9 @@ input.button {
 
 .checkbox {
   display: inline-block;
+  margin-left: -0.1em;
+  height: 1em;
+  width: 1em;
 }
 
 .medName {
