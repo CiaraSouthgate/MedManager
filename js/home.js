@@ -6,6 +6,7 @@ $("#addMed").click(function() {
 // Makes add med window disappear
 $("#cancel").click(function() {
   $("#modal").css("display", "none");
+  resetTimes();
 });
 
 //Takes frequency, makes coordinating amount of time slots appear
@@ -65,8 +66,8 @@ function retrieveAllMeds(){
   allMeds = [];
   firebase.auth().onAuthStateChanged(function(){
     var userId = firebase.auth().currentUser.uid;
-    var medsRef = firebase.database().ref('/users/' + userId + "/meds/");
-    medsRef.once('value').then(function (snap) {
+    var medsRef = firebase.database().ref("/users/" + userId + "/meds/");
+    medsRef.once("value").then(function (snap) {
       snap.forEach(function (childSnap) { 
         allMeds.push(childSnap.val());
       });
@@ -109,7 +110,7 @@ function addMeds(){
       "strength": strength,
       "unit": unit,
       "frequency": frequency,
-      "timeUnit": timeUnit,
+      // "timeUnit": timeUnit,
       "times": times,
       "auxWarnings": auxWarnings,
       "asNeeded": medAsNeeded,
@@ -130,24 +131,43 @@ function checkMeds() {
   return false;
 }
 
-// Prompts user if they want to overwrite a med if it already exists
-// Adds a med, doesn't close window. 
-$("#add").click(function() {
-  if (checkMeds()) {
-    alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
-  }
+// // Prompts user if they want to overwrite a med if it already exists
+// // Adds a med, doesn't close window. 
+// $("#add").click(function(e) {
+//   // e.preventDefault();
+//   if (checkMeds()) {
+//     alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
+//   }
+//   addMeds();
+// });
+
+// // Prompts user if they want to overwrite a med if it already exists
+// // Adds a med, closes window. 
+// $("#addClose").click(function(e) {
+//   e.preventDefault();
+//   if (checkMeds()) {
+//     alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
+//   }
+//   addMeds();
+//   $("#modal").css("display", "none");
+// });
+
+// Submits med form to database
+$("#medForm").submit(function(e) {
+  e.preventDefault();
+  $("#modal").css("display", "none");
   addMeds();
 });
 
-// Prompts user if they want to overwrite a med if it already exists
-// Adds a med, closes window. 
-$("#addClose").click(function() {
-  if (checkMeds()) {
-    alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
-  }
-  addMeds();
-  $("#modal").css("display", "none");
-});
+function resetTimes() {
+  $("#times").html("");
+  $("#frequency option:selected").text("1");
+  populateTimes();
+}
+
+$("#reset").click(function() {
+  resetTimes();
+})
 
 var existingTimes = [];
 
@@ -248,6 +268,7 @@ function createMedDiv(med) {
   let name = $("<h2></h2>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
+  let freq = $("<p></p>");
   let notes = $("<div></div>");
   let checkBox = $("<input></input>");
   
@@ -260,6 +281,10 @@ function createMedDiv(med) {
   $(medDiv).append(checkBox);
   $(medDiv).append(name);
   $(notes).append(dosage);
+  if (med.asNeeded) {
+    $(notes).append(freq);
+    $(freq).append(med.frequency + " time(s) per day");
+  }
   
   $(medDiv).addClass("medDiv");
   $(name).addClass("medName");
@@ -270,7 +295,7 @@ function createMedDiv(med) {
   try {
     for (let i = 0; i < med.auxWarnings.length; i++) {
       let note = $("<p></p>");
-      $(note).append(warnings[med.auxWarnings[i]]);
+      $(note).append("&#8226; " + warnings[med.auxWarnings[i]]);
       $(notes).append(note);
     }
   } catch {}
@@ -362,21 +387,106 @@ $("#test").click(function() {
   med.appendChild(notesSpot);
 });
 
-//Logout button
+// Logout button
 $("#logout").click(function() {
   firebase.auth().signOut().then(function() {
     window.location = "index.html";
   });
 });
 
+// Pharmacy info window controls
+$("#pharmacy").click(function() {
+  $("#pharmModal").css("display", "block");
+});
 
+$("#pharmClose").click(function() {
+  $("#pharmModal").css("display", "none");
+  $("#pharmForm").css("display", "none");
+  if (!pharm) {
+    $("#pharmMessage").css("display", "block");
+  }
+});
 
-//Testing clearing and repopulating page
-// $("#clearMeds").click(function() {
-//   clearMeds();
-// });
+$("#addNewPharm").click(function() {
+  $("#pharmForm").css("display", "block");
+  $("#pharmMessage").css("display", "none");
+});
 
-// $("#getMeds").click(function() {
-//   retrieveAllMeds();
-//   populateMeds();
-// })
+$("#cancelAddNewPharm").click(function() {
+  $("#pharmForm").css("display", "none");
+  $("#pharmMessage").css("display", "block");
+});
+
+$("#pharmEdit").click(function() {
+  $("#pharmForm").css("display", "block");
+  $("#pharmInfo").css("display", "none");
+  $("#cancelAddNewPharm").css("display", "none");
+  $("#cancelPharmEdit").css("display", "inline-block");
+  $("#pharmName").val(pharm.pharmName);
+  $("#pharmStreet").val(pharm.pharmStreet);
+  $("#pharmCity").val(pharm.pharmCity);
+  $("#pharmProv").val(pharm.pharmProv);
+  $("#pharmPC").val(pharm.pharmPC);
+  $("#pharmPhone").val(pharm.pharmPhone);
+  $("#pharmFax").val(pharm.pharmFax);
+});
+
+$("#cancelPharmEdit").click(function() {
+  $("#pharmForm").css("display", "none");
+  $("#pharmInfo").css("display", "block");
+});
+
+$("#pharmForm").submit(function(e) {
+  e.preventDefault();
+  $("#pharmForm").css("display", "none");
+  $("#pharmInfo").css("display", "block");
+  $("#pharmInfo").html("<div></div>");
+  pharmSubmit();
+  retrievePharmacy();
+});
+
+// Sends pharmacy data to database
+function pharmSubmit() {
+  var pharmName = $("#pharmName").val();
+  var pharmStreet = $("#pharmStreet").val();
+  var pharmCity = $("#pharmCity").val();
+  var pharmProv = $("#pharmProv").val();
+  var pharmPC = $("#pharmPC").val();
+  var pharmPhone = $("#pharmPhone").val();
+  var pharmFax = $("#pharmFax").val();
+
+  firebase.auth().onAuthStateChanged(function(user){
+    firebase.database().ref("users/" + user.uid + "/pharmacy/").update( {
+      "pharmName": pharmName,
+      "pharmStreet": pharmStreet,
+      "pharmCity": pharmCity,
+      "pharmProv": pharmProv,
+      "pharmPC": pharmPC,
+      "pharmPhone": pharmPhone,
+      "pharmFax": pharmFax
+    });
+  });
+}
+
+// Retrieves pharmacy data from database
+var pharm = {};
+function retrievePharmacy(){
+  firebase.auth().onAuthStateChanged(function(){
+    var userId = firebase.auth().currentUser.uid;
+    var pharmRef = firebase.database().ref("/users/" + userId + "/pharmacy/");
+    pharmRef.once("value").then(function (snap) {
+        pharm = snap.val();
+        if (pharm) {
+          populatePharmacy();
+        }
+    });
+  });
+}
+
+retrievePharmacy();
+
+function populatePharmacy() {
+  $("#pharmInfo").append("<h3>" + pharm.pharmName + "</h3><h6>Address</h6><p>" + pharm.pharmStreet + "<br/>" + pharm.pharmCity + "<br/>" + pharm.pharmProv + "<span></span>" + pharm.pharmPC + "</p><h6>Phone</h6><p>" + pharm.pharmPhone + "</p><h6>Fax</h6><p>" + pharm.pharmFax + "</p>");
+  $("#pharmMessage").css("display", "none");
+  $("#pharmEdit").css("display", "inline-block");
+}

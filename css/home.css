@@ -44,14 +44,21 @@
 
 /* Modal */
 #modal-content h1 {
-  color: #259db2;
+  color: #017990;
 }
 #image {
   height: 4em;
   width: 4em;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   float: left;
   margin: 0 0.5em 0.5em 0;
+  text-align: center;
+}
+
+#image i {
+  line-height: 1.2em;
+  font-size: 40pt;
+  color: #017990;
 }
 
 #drugName {
@@ -81,7 +88,7 @@ input[type="radio"] {
 }
 
 .button {
-  margin-right: 0.3em !important;
+  margin-right: 0.1em !important;
   outline: 0;
 }
 
@@ -102,7 +109,7 @@ input[type="radio"] {
   background-color: #259db2 !important;
 }
 
-#modal {
+#modal, #pharmModal {
   display: none;
   position: fixed;
   z-index: 5;
@@ -115,7 +122,7 @@ input[type="radio"] {
   background-color: rgba(0,0,0,0.4);
 }
 
-#modal-content {
+#modal-content, #pharmModal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -123,4 +130,52 @@ input[type="radio"] {
   width: 23em;
   border-radius: 5px;
   display: table;
+}
+
+/* Pharmacy info modal */
+#addNewPharm {
+  font-weight: 700;
+  color: #017990;
+}
+
+#addNewPharm:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#pharmEdit {
+  display: none;
+}
+
+#pharmForm {
+  display:none;
+}
+
+#cancelPharmEdit {
+  display: none;
+}
+
+.pharmInfoField {
+  width: 20em;
+}
+
+#pharmProv {
+  width: 8em;
+}
+
+#pharmPC {
+  width: 11.366em;
+}
+
+#pharmInfo h6 {
+  color: #7F7F7F;
+  margin: 0.2em 0 0 1em;
+}
+
+#pharmInfo p {
+  margin: 0 0 0em 2em;
+}
+
+#pharmInfo span {
+  margin: 0 1em;
 }
