@@ -81,6 +81,10 @@ aside a {
   font-weight: bold;
 }
 
+aside a:hover {
+  color: #FFFFFF;
+}
+
 .content {
   height: 100%;
   margin: auto;
@@ -208,3 +212,15 @@ input.button {
   font-size: .8em;
 }
 
+.firebaseui-link {
+  color: #017990 !important;
+}
+
+.firebaseui-button {
+  background-color: #017990 !important;
+  border: 2px solid #249DB2 !important;
+}
+
+.firebaseui-button:hover {
+  background-color: #249DB2 !important;
+}
