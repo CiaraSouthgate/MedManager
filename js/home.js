@@ -422,6 +422,8 @@ $("#pharmEdit").click(function() {
   $("#pharmInfo").css("display", "none");
   $("#cancelAddNewPharm").css("display", "none");
   $("#cancelPharmEdit").css("display", "inline-block");
+  $("#pharmClose").css("display", "none");
+  $("#pharmEdit").css("display", "none");
   $("#pharmName").val(pharm.pharmName);
   $("#pharmStreet").val(pharm.pharmStreet);
   $("#pharmCity").val(pharm.pharmCity);
@@ -434,12 +436,15 @@ $("#pharmEdit").click(function() {
 $("#cancelPharmEdit").click(function() {
   $("#pharmForm").css("display", "none");
   $("#pharmInfo").css("display", "block");
+  $("#pharmClose").css("display", "inline-block");
+  $("#pharmEdit").css("display", "inline-block");
 });
 
 $("#pharmForm").submit(function(e) {
   e.preventDefault();
   $("#pharmForm").css("display", "none");
   $("#pharmInfo").css("display", "block");
+  $("#pharmClose").css("display", "inline-block");
   $("#pharmInfo").html("<div></div>");
   pharmSubmit();
   retrievePharmacy();
