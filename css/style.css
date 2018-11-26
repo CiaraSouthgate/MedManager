@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans";
+}
+
+body.login {
+  height: 100%;
+}
+
+#background {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-image: url(../images/backgroundlarge.jpg);
+  background-size: 1600px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  position: fixed;
+}
+
+header {
+  width: 100%;
+  background-color: white;
+  height: 60px;
+  display: block;
+  clear: both;
+}
+
+img.icon {
+  height: 50px;
+  width: auto;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.nav {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+h1 {
+  display: inline-block;
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: bold;
+  color: #017990;
+  margin: 5px;
+}
+
+h2 {
+  font-size: 18pt;
+}
+
+h3 {
+  color: rgba(0,0,0,.5);
+  font-size: 14pt;
+}
+
+aside {
+  width: 100%;
+  /*border-top: 1px solid rgba(0, 0, 0, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);*/
+  display: block;
+  box-shadow: 0 1px 2px grey;
+  background-color: #017990;
+  color: white;
+  min-height: 25px;
+}
+
+aside a {
+  color: white;
+  text-align: right;
+  float: right;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+aside a:hover {
+  color: #FFFFFF;
+}
+
+.content {
+  height: 100%;
+  margin: auto;
+  padding: 10px;
+}
+
+div.period {
+  border: solid 1px grey;
+  display: block;
+  background-color: rgba(255, 255, 255, .75);
+  margin: 5px;
+  border-radius: 5px;
+  padding: 3px;
+  min-width: 300px;
+}
+
+.med {
+  margin-left: 30px;
+  border-top: 1px solid black;
+}
+
+.med > p {
+  margin: 0;
+}
+
+#login-main {
+  text-align: center;
+}
+
+#main {
+  margin: 15px auto;
+  text-align: center;
+  align-items: center;
+  width: 250px;
+}
+
+#mainText {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, .5);
+  text-align: justify;
+  font-size: 10pt;
+}
+
+#mainText p {
+  margin: 0;
+}
+
+fieldset.login {
+  border: 0;
+}
+
+input {
+  margin: 3px;
+  padding: 2px;
+  border-radius: 3px;
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+input.button {
+  background-color: white;
+  margin-top: 10px;
+}
+
+#test {
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+}
+
+.timeDiv {
+  margin-left: 1em;
+  border-bottom: 1px black dotted;
+}
+
+.timeDiv:last-child {
+  border: none;
+}
+
+.checkbox {
+  display: inline-block;
+  margin-left: -0.1em;
+  height: 1em;
+  width: 1em;
+}
+
+.medName {
+  display: inline-block;
+}
+
+.medDiv {
+  margin-left: 1em;
+  border-bottom: 1px lightgrey solid;
+}
+
+.medDiv:last-child {
+  border: none;
+}
+
+.medDiv h2 {
+  font-size: 16pt;
+  margin: 0;
+  padding: 0;
+}
+
+.medDiv p {
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+}
+
+.notes {
+  margin-left: 1em;
+}
+
+.medName span {
+  margin-left: 1em;
+  color: rgba(0, 0, 0, .5);
+  font-size: .8em;
+}
+
+.firebaseui-link {
+  color: #017990 !important;
+}
+
+.firebaseui-button {
+  background-color: #017990 !important;
+  border: 2px solid #249DB2 !important;
+}
+
+.firebaseui-button:hover {
+  background-color: #249DB2 !important;
+}
