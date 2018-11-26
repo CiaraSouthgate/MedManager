@@ -111,6 +111,29 @@
     $("#modal").css("display", "none");
   });
 
+  // setting up a clock
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    if (h > 12) {
+      h = h - 12;
+    }
+    if (h == 0) {
+      h = 12;
+    }
+    var m = today.getMinutes();
+    //m = checkTime(i);
+    document.getElementById("time").innerHTML = h + ":" + m;
+    var t = setTimeout(startTime, 500);
+  }
+
+  function checkTime(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
+
   $("#test").click(function() {
     console.log(retrieveAllMeds());
     var aft = document.getElementById("afternoon");

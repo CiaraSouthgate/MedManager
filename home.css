@@ -35,8 +35,24 @@ input[type="radio"] {
   margin-left: 0.5em !important;
 }
 
+#welcome { 
+  display: inline-block;
+  text-align: center;
+  margin-left: 100px;
+}
+
 .button {
   margin-right: 0.5em !important;
+}
+
+footer {
+  float: right;
+  margin-right: 10px;
+  margin-top: 340px;
+}
+
+#time {
+  font-size: 18pt;
 }
 
 #modal {

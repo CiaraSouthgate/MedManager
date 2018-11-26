@@ -10,10 +10,11 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="home.css">
   </head>
-  <body>
+  <body onload="startTime()">
     <header>
       <h1>MedManager</h1>
       <img class="icon" alt="med icon" src=images/drugsblue.png>
+      <h1 id="welcome">Welcome, </h1>
     </header>
     <aside>
       <button id="addMed"><span class="fas fa-plus-square fa-lg"></span> Add a Medication</button>
@@ -39,6 +40,7 @@
         </div>
       </div>
     </div>
+    <footer><div id="time"></div></footer>
     <div id="modal">
         <div id="modal-content">
             <h1>Add a medication</h1>
@@ -82,7 +84,6 @@
               <div id="times">
                 <div class='timeSlot'><input class="timepicker" placeholder="8:00 AM"></div>
               </div>
-              
               <span>Auxiliary warnings</span>
               <select id="auxWarnings" name="auxWarnings" multiple size="3">
                 <option value="takeWithFood">Take with food</option>
