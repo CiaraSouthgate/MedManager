@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#image {
+  height: 4em;
+  width: 4em;
+  border: 1px solid black;
+  float: left;
+  margin: 0 0.5em 0.5em 0;
+}
+
+#drugName {
+  width: 75%;
+  height: 1.5em;
+  margin-bottom: 0.2em;
+  font-size: 16pt;
+}
+
+#genericName {
+  width: 100%;
+}
+
+#auxWarnings {
+  max-width: 100%;
+}
+
+#auxWarnings option {
+  font-size: 8pt;
+}
+
+input[type="radio"] {
+  margin-left: 0.5em !important;
+}
+
+.button {
+  margin-right: 0.5em !important;
+}
+
+#modal {
+  display: none;
+  position: fixed;
+  z-index: 5;
+  padding-top: 90px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+#modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 23em;
+  border-radius: 5px;
+  display: table;
+}

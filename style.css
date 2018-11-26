@@ -4,29 +4,39 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Open Sans";
 }
 
 body.login {
   height: 100%;
-  background-image: url(images/background.jpg);
-  background-size: cover;
+}
+
+#background {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background-image: url(images/backgroundlarge.jpg);
+  background-size: 1600px;
+  background-repeat: no-repeat;
   background-position: bottom left;
+  position: fixed;
 }
 
 header {
   width: 100%;
-  background-color: #02AFD1;
-  height: 100px;
+  background-color: white;
+  height: 60px;
   display: block;
   clear: both;
 }
 
 img.icon {
-  height: 100px;
+  height: 50px;
   width: auto;
-  float: right;
   display: inline-block;
-  vertical-align: middle;
+  margin-bottom: 15px;
 }
 
 .nav {
@@ -42,34 +52,114 @@ h1 {
 }
 
 header > h1 {
-  color: white;
-  margin: auto;
+  color: #017990;
+  margin: 5px;
 }
 
 aside {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, .5);
+  /*border-top: 1px solid rgba(0, 0, 0, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);*/
   display: block;
-  box-shadow: 0 1px 3px;
+  box-shadow: 0 1px 2px grey;
+  background-color: #017990;
+  color: white;
+  min-height: 25px;
+}
+
+aside a {
+  color: white;
+  text-align: right;
+  float: right;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+#addMed, #logout {
+  color: white;
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 16pt;
+  left: 0;
+  position: relative;
+  background: none;
+  border: none;
+}
+
+#logout {
+  float: right;
+  font-size: 10pt;
 }
 
 .content {
-  width: 90%;
   height: 100%;
   margin: auto;
-  border-left: 1px solid grey;
-  border-right: 1px solid grey;
   padding: 10px;
 }
 
 div.period {
-  border-bottom: dotted 1px black;
-  display: inline-block;
+  border: solid 1px grey;
+  display: block;
+  background-color: rgba(255, 255, 255, .75);
+  margin: 5px;
+  border-radius: 5px;
+  padding: 3px;
+  min-width: 300px;
 }
 
 .med {
   margin-left: 30px;
-  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.med > p {
+  margin: 0;
+}
+
+#main {
+  margin: 15px auto;
+  text-align: center;
+  align-items: center;
+  width: 250px;
+}
+
+#mainText {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, .5);
+  text-align: justify;
+  font-size: 10pt;
+}
+
+#mainText p {
+  margin: 0;
+}
+
+fieldset.login {
+  border: 0;
+}
+
+input {
+  margin: 3px;
+  padding: 2px;
+  border-radius: 3px;
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+input.button {
+  background-color: white;
+  margin-top: 10px;
+}
+
+#test {
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #main {
