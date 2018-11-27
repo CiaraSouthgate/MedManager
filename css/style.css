@@ -30,6 +30,8 @@ header {
   height: 60px;
   display: block;
   clear: both;
+  position: fixed;
+  z-index: 10;
 }
 
 img.icon {
@@ -71,6 +73,9 @@ aside {
   background-color: #017990;
   color: white;
   min-height: 25px;
+  position: fixed;
+  top: 60px;
+  z-index: 10;
 }
 
 aside a {
@@ -89,6 +94,8 @@ aside a:hover {
   height: 100%;
   margin: auto;
   padding: 10px;
+  position: relative;
+  top: 100px;
 }
 
 div.period {
