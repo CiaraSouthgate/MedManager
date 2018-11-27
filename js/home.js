@@ -327,22 +327,23 @@ function createMedDiv(med) {
   }
 }
 
-//function checkControl() {
-//  firebase.auth().onAuthStateChanged(function(){
-//    var userId = firebase.auth().currentUser.uid;
-//  });
-//  let divs = $(".medDiv");
-//  for (let i = 0; i < divs.length; i++) {
-//    let current = divs[i];
-//    let name = $(current).children(".medName").text();
-//    console.log(name);
-//    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
-//    
-//    medsRef.once("value").then(function (snap) {
-//      snap.forEach(function (childSnap) { 
-//        allMeds.push(childSnap.val());
-//      });
-//  });
+function checkControl() {
+  firebase.auth().onAuthStateChanged(function(){
+    var userId = firebase.auth().currentUser.uid;
+  });
+  let divs = $(".medDiv");
+  for (let i = 0; i < divs.length; i++) {
+    let current = divs[i];
+    let name = $(current).children(".medName").text();
+    console.log(name);
+    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
+  }
+    
+    medsRef.once("value").then(function (snap) {
+      snap.forEach(function (childSnap) { 
+        allMeds.push(childSnap.val());
+      });
+  });
   
 //  $(checkBox).change(function() {
 //  if ($(this).is(":checked")) {
