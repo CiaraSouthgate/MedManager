@@ -405,16 +405,11 @@ $("#logout").click(function() {
       h = 12;
     }
     var m = today.getMinutes();
-    //m = checkTime(i);
+    if (m < 10) {
+      m = "0" + m;
+    }
     document.getElementById("time").innerHTML = h + ":" + m;
     var t = setTimeout(startTime, 500);
-  }
-
-  function checkTime(i) {
-    if (i < 10) {
-      i = "0" + i;
-    }
-    return i;
   }
 
 // Pharmacy info window controls

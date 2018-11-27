@@ -8,13 +8,11 @@
   firebase.auth().onAuthStateChanged(function(user){
     if (user){
       userName=user.displayName;
-	  		//console.log (userName);
-	  		// display quote from database 
-      var dbRef = firebase.database().ref().child('message');
+      
     } else {
-      userName="my friend";
+      userName="test";
     }
-        welcome.innerText = "Hello " + userName;
+        welcome.innerText = "Welcome, " + userName;
     });
 
  
