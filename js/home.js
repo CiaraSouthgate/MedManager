@@ -88,13 +88,18 @@ function addMeds(){
   var timeUnit = $("#timeUnit").val();
   var auxWarnings = $("#auxWarnings").val();
   var times = [];
-  var isTaken = false;
+  var isTaken = [];
+  
+  if (medAsNeeded) {
+    isTaken = false;
+  }
 
   //Loops over time fields, adds to array within med object
   function getTimes() {
     var time = $(".timepicker");
     for (var i = 0; i < time.length; i++) {
-    times.push(time[i].value);
+      isTaken.push(false);
+      times.push(time[i].value);
     }
   }
 
@@ -110,7 +115,6 @@ function addMeds(){
       "strength": strength,
       "unit": unit,
       "frequency": frequency,
-      // "timeUnit": timeUnit,
       "times": times,
       "auxWarnings": auxWarnings,
       "asNeeded": medAsNeeded,
@@ -182,6 +186,7 @@ function Comparator(a, b) {
   }
 }
 
+//Parses string representing time, converts into array
 function parseTime(time) {
   if (time.length < 8) {
       time = "0" + time;
@@ -199,6 +204,7 @@ function parseTime(time) {
   return [hr, min, time];
 }
 
+//Checks if time exists in list of times, if not, adds it
 function setTimes(medTimes) {
   for (let j = 0; j < medTimes.length; j++) {
     let time = medTimes[j];
@@ -263,6 +269,7 @@ var warnings = {
   inhale: "For inhalation only"
 }
 
+//Creates a div for each medication, adds it to its time
 function createMedDiv(med) {
   var medDiv = $("<div></div>");
   let name = $("<h2></h2>");
@@ -292,6 +299,7 @@ function createMedDiv(med) {
   $(notes).addClass("notes");
   $(checkBox).addClass("checkbox");
   
+  //If med has warnings, adds them to div
   try {
     for (let i = 0; i < med.auxWarnings.length; i++) {
       let note = $("<p></p>");
@@ -303,8 +311,9 @@ function createMedDiv(med) {
     $(medDiv).append(notes);
   }
 
-  checkBox.checked = med.isTaken;
-  checkControl(checkBox, med);
+  
+//  checkBox.checked = med.isTaken;
+//  checkControl(checkBox, med);
   
   if (med.asNeeded) {
     $("#asNeeded").append(medDiv);
@@ -318,22 +327,38 @@ function createMedDiv(med) {
   }
 }
 
-function checkControl(checkBox, med) {
-  $(checkBox).change(function() {
-  if ($(this).is(":checked")) {
-      firebase.auth().onAuthStateChanged(function(user){
-        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
-          "isTaken": true
-        });
-      });                                                                             
-    } else {
-      firebase.auth().onAuthStateChanged(function(user){
-        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
-          "isTaken": false
-        });
-      });
-    }
-  });
+//function checkControl() {
+//  firebase.auth().onAuthStateChanged(function(){
+//    var userId = firebase.auth().currentUser.uid;
+//  });
+//  let divs = $(".medDiv");
+//  for (let i = 0; i < divs.length; i++) {
+//    let current = divs[i];
+//    let name = $(current).children(".medName").text();
+//    console.log(name);
+//    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
+//    
+//    medsRef.once("value").then(function (snap) {
+//      snap.forEach(function (childSnap) { 
+//        allMeds.push(childSnap.val());
+//      });
+//  });
+  
+//  $(checkBox).change(function() {
+//  if ($(this).is(":checked")) {
+//      firebase.auth().onAuthStateChanged(function(user){
+//        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+//          "isTaken": true
+//        });
+//      });                                                                             
+//    } else {
+//      firebase.auth().onAuthStateChanged(function(user){
+//        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+//          "isTaken": false
+//        });
+//      });
+//    }
+//  });
 }
 
 //Clears meds from the page so it can be refreshed with an up-to-date list from the database
@@ -345,6 +370,7 @@ function clearMeds() {
   existingTimes = [];
 }
 
+//Populates screen with meds from database
 function populateMeds() {
   for (let i = 0; i < allMeds.length; i++) {
     let current = allMeds[i];
