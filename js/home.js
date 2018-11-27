@@ -265,7 +265,10 @@ var warnings = {
 
 function createMedDiv(med) {
   var medDiv = $("<div></div>");
-  let name = $("<h2></h2>");
+  let name = $("<div></div>");
+  let medName = $("<h2></h2>");
+  let edit = $("<i class='fas fa-pencil-alt'></i>");
+  let deleteMed = $("<i class='fas fa-times'></i>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
   let freq = $("<p></p>");
@@ -274,12 +277,15 @@ function createMedDiv(med) {
   
   $(checkBox).attr("type", "checkbox");
   
-  $(name).append(med.medName);
+  $(medName).append(med.medName);
   $(gen).append(med.genericName);
+  $(name).append(medName);
   $(name).append(gen);
   $(dosage).append(med.strength + " " + med.unit);
   $(medDiv).append(checkBox);
   $(medDiv).append(name);
+  $(medDiv).append(edit);
+  $(medDiv).append(deleteMed);
   $(notes).append(dosage);
   if (med.asNeeded) {
     $(notes).append(freq);
@@ -287,10 +293,14 @@ function createMedDiv(med) {
   }
   
   $(medDiv).addClass("medDiv");
+  $(medName).css("display", "inline-block");
   $(name).addClass("medName");
+  $(medName).addClass("specificMedName");
   $(dosage).addClass("dosage");
   $(notes).addClass("notes");
   $(checkBox).addClass("checkbox");
+  $(edit).addClass("editIcon");
+  $(deleteMed).addClass("deleteIcon");
   
   try {
     for (let i = 0; i < med.auxWarnings.length; i++) {
@@ -316,6 +326,11 @@ function createMedDiv(med) {
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
+  //Edit function
+  $(".medDiv").mouseover(function() {
+    // alert($(this).find(".specificMedName").text());
+    ($(this).find(".editIcon").css("color", "red"));
+  });
 }
 
 function checkControl(checkBox, med) {
