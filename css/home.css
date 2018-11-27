@@ -191,3 +191,17 @@ input[type="radio"] {
 #pharmInfo span {
   margin: 0 1em;
 }
+
+/* Edit/Delete function */
+.editIcon {
+  margin: 0 0.5em 0 1em;
+}
+
+.editIcon, .deleteIcon {
+  color: #7F7F7F;
+  display: none;
+}
+
+.editIcon:hover, .deleteIcon:hover {
+  cursor: pointer;
+}

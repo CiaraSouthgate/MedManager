@@ -326,10 +326,21 @@ function createMedDiv(med) {
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
-  //Edit function
-  $(".medDiv").mouseover(function() {
-    // alert($(this).find(".specificMedName").text());
-    ($(this).find(".editIcon").css("color", "red"));
+  // Edit and delete icons appear and reappear
+  $(".medDiv").mouseenter(function() {
+    $(this).find(".editIcon").css("display", "inline-block");
+    $(this).find(".deleteIcon").css("display", "inline-block");
+  });
+  $(".medDiv").mouseleave(function() {
+    $(this).find(".editIcon").css("display", "none");
+    $(this).find(".deleteIcon").css("display", "none");
+  });
+  $(".editIcon").click(function() {
+    // alert($(".medName").text());
+    // var name = $(this).parent().find("h2").text();
+    // console.log("This drug's name is: " + name);
+    // var medIdentifier = "allMeds." + name;
+    // alert(medIdentifier);
   });
 }
 
