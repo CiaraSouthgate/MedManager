@@ -272,8 +272,10 @@ var warnings = {
 //Creates a div for each medication, adds it to its time
 function createMedDiv(med) {
   var medDiv = $("<div></div>");
-  let name = $("<h2></h2>");
-  let nameSpan = $("<span></span>");
+  let edit = $("<i class='fas fa-pencil-alt'></i>");
+  let deleteMed = $("<i class='fas fa-times'></i>");
+  let name = $("<div></div>");
+  let medName = $("<h2></h2>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
   let freq = $("<p></p>");
@@ -282,13 +284,16 @@ function createMedDiv(med) {
   
   $(checkBox).attr("type", "checkbox");
   
-  $(name).append(nameSpan);
-  $(nameSpan).append(med.medName);
+
+  $(medName).append(med.medName);
   $(gen).append(med.genericName);
+  $(name).append(medName);
   $(name).append(gen);
   $(dosage).append(med.strength + " " + med.unit);
   $(medDiv).append(checkBox);
   $(medDiv).append(name);
+  $(medDiv).append(edit);
+  $(medDiv).append(deleteMed);
   $(notes).append(dosage);
   if (med.asNeeded) {
     $(notes).append(freq);
@@ -296,12 +301,15 @@ function createMedDiv(med) {
   }
   
   $(medDiv).addClass("medDiv");
+  $(medName).css("display", "inline-block");
   $(name).addClass("medName");
-  $(nameSpan).addClass("nameSpan");
   $(gen).addClass("generic");
+  $(medName).addClass("specificMedName");
   $(dosage).addClass("dosage");
   $(notes).addClass("notes");
   $(checkBox).addClass("checkbox");
+  $(edit).addClass("editIcon");
+  $(deleteMed).addClass("deleteIcon");
   
   //If med has warnings, adds them to div
   try {
@@ -327,7 +335,26 @@ function createMedDiv(med) {
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
-  checkControl(checkBox, med);
+
+  checkControl();
+  
+  // Edit and delete icons appear and reappear
+  $(".medDiv").mouseenter(function() {
+    $(this).find(".editIcon").css("display", "inline-block");
+    $(this).find(".deleteIcon").css("display", "inline-block");
+  });
+  $(".medDiv").mouseleave(function() {
+    $(this).find(".editIcon").css("display", "none");
+    $(this).find(".deleteIcon").css("display", "none");
+  });
+  $(".editIcon").click(function() {
+    // alert($(".medName").text());
+    // var name = $(this).parent().find("h2").text();
+    // console.log("This drug's name is: " + name);
+    // var medIdentifier = "allMeds." + name;
+    // alert(medIdentifier);
+  });
+
 }
 
 function checkControl() {
@@ -337,7 +364,7 @@ function checkControl() {
     var index;
     var taken;
     let current = divs[i];
-    let name = $(current).find(".nameSpan").text();
+    let name = $(current).find(".specificMedName").text();
     let box = $(current).find(".checkbox");
     let time = $(current).parent().find("h3").text().toUpperCase();
     
@@ -443,16 +470,11 @@ $("#logout").click(function() {
       h = 12;
     }
     var m = today.getMinutes();
-    //m = checkTime(i);
+    if (m < 10) {
+      m = "0" + m;
+    }
     document.getElementById("time").innerHTML = h + ":" + m;
     var t = setTimeout(startTime, 500);
-  }
-
-  function checkTime(i) {
-    if (i < 10) {
-      i = "0" + i;
-    }
-    return i;
   }
 
 // Pharmacy info window controls
