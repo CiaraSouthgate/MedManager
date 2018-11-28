@@ -463,8 +463,12 @@ $("#logout").click(function() {
   function startTime() {
     var today = new Date();
     var h = today.getHours();
+    var suffix;
     if (h > 12) {
       h = h - 12;
+      suffix = "PM";
+    } else {
+      suffix = "AM";
     }
     if (h == 0) {
       h = 12;
@@ -473,7 +477,7 @@ $("#logout").click(function() {
     if (m < 10) {
       m = "0" + m;
     }
-    document.getElementById("time").innerHTML = h + ":" + m;
+    document.getElementById("time").innerHTML = h + ":" + m + " " + suffix;
     var t = setTimeout(startTime, 500);
   }
 
