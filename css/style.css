@@ -213,7 +213,7 @@ input.button {
   margin-left: 1em;
 }
 
-.medName span {
+.generic {
   margin-left: 1em;
   color: rgba(0, 0, 0, .5);
   font-size: .8em;

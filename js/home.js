@@ -273,6 +273,7 @@ var warnings = {
 function createMedDiv(med) {
   var medDiv = $("<div></div>");
   let name = $("<h2></h2>");
+  let nameSpan = $("<span></span>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
   let freq = $("<p></p>");
@@ -281,7 +282,8 @@ function createMedDiv(med) {
   
   $(checkBox).attr("type", "checkbox");
   
-  $(name).append(med.medName);
+  $(name).append(nameSpan);
+  $(nameSpan).append(med.medName);
   $(gen).append(med.genericName);
   $(name).append(gen);
   $(dosage).append(med.strength + " " + med.unit);
@@ -295,6 +297,8 @@ function createMedDiv(med) {
   
   $(medDiv).addClass("medDiv");
   $(name).addClass("medName");
+  $(nameSpan).addClass("nameSpan");
+  $(gen).addClass("generic");
   $(dosage).addClass("dosage");
   $(notes).addClass("notes");
   $(checkBox).addClass("checkbox");
@@ -312,8 +316,6 @@ function createMedDiv(med) {
   }
 
   
-//  checkBox.checked = med.isTaken;
-//  checkControl(checkBox, med);
   
   if (med.asNeeded) {
     $("#asNeeded").append(medDiv);
@@ -325,30 +327,39 @@ function createMedDiv(med) {
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
+  checkControl(checkBox, med);
 }
 
 function checkControl() {
-  firebase.auth().onAuthStateChanged(function(){
-    var userId = firebase.auth().currentUser.uid;
-  });
   let divs = $(".medDiv");
-  for (let i = 0; i < divs.length; i++) {
-    let current = divs[i];
-    let name = $(current).children(".medName").text();
-    console.log(name);
-    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
-  }
-    
-    medsRef.once("value").then(function (snap) {
-      snap.forEach(function (childSnap) { 
-        allMeds.push(childSnap.val());
-      });
-  });
   
-//  $(checkBox).change(function() {
+  for (let i = 0; i < divs.length; i++) {
+    var index;
+    var taken;
+    let current = divs[i];
+    let name = $(current).find(".nameSpan").text();
+    let box = $(current).find(".checkbox");
+    let time = $(current).parent().find("h3").text().toUpperCase();
+    
+    var userId = firebase.auth().currentUser.uid;
+    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
+  
+    medsRef.once("value").then(function (snap) {
+      let times = snap.val().times;
+      taken = snap.val().isTaken;
+      index = $.inArray(time, times);
+        if (index > -1) {
+          $(box).prop("checked", taken[index]);
+        } else {
+          $(box).prop("checked", taken);
+        }
+    });
+  }
+  
+//  $(box).change(function() {
 //  if ($(this).is(":checked")) {
 //      firebase.auth().onAuthStateChanged(function(user){
-//        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+//        firebase.database().ref("users/" + userId + "/meds/" + name).update( {
 //          "isTaken": true
 //        });
 //      });                                                                             
