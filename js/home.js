@@ -358,11 +358,11 @@ function createMedDiv(med) {
 }
 
 function checkControl() {
+  var index;
+  var taken;
   let divs = $(".medDiv");
   
   for (let i = 0; i < divs.length; i++) {
-    var index;
-    var taken;
     let current = divs[i];
     let name = $(current).find(".specificMedName").text();
     let box = $(current).find(".checkbox");
