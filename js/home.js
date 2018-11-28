@@ -272,10 +272,10 @@ var warnings = {
 //Creates a div for each medication, adds it to its time
 function createMedDiv(med) {
   var medDiv = $("<div></div>");
-  let name = $("<div></div>");
-  let medName = $("<h2></h2>");
   let edit = $("<i class='fas fa-pencil-alt'></i>");
   let deleteMed = $("<i class='fas fa-times'></i>");
+  let name = $("<div></div>");
+  let medName = $("<h2></h2>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
   let freq = $("<p></p>");
@@ -284,6 +284,7 @@ function createMedDiv(med) {
   
   $(checkBox).attr("type", "checkbox");
   
+
   $(medName).append(med.medName);
   $(gen).append(med.genericName);
   $(name).append(medName);
@@ -302,6 +303,7 @@ function createMedDiv(med) {
   $(medDiv).addClass("medDiv");
   $(medName).css("display", "inline-block");
   $(name).addClass("medName");
+  $(gen).addClass("generic");
   $(medName).addClass("specificMedName");
   $(dosage).addClass("dosage");
   $(notes).addClass("notes");
@@ -322,8 +324,6 @@ function createMedDiv(med) {
   }
 
   
-//  checkBox.checked = med.isTaken;
-//  checkControl(checkBox, med);
   
   if (med.asNeeded) {
     $("#asNeeded").append(medDiv);
@@ -335,6 +335,9 @@ function createMedDiv(med) {
       $(medDiv).clone().appendTo(timeDiv);
     });
   }
+
+  checkControl();
+  
   // Edit and delete icons appear and reappear
   $(".medDiv").mouseenter(function() {
     $(this).find(".editIcon").css("display", "inline-block");
@@ -351,30 +354,39 @@ function createMedDiv(med) {
     // var medIdentifier = "allMeds." + name;
     // alert(medIdentifier);
   });
+
 }
 
 function checkControl() {
-  firebase.auth().onAuthStateChanged(function(){
-    var userId = firebase.auth().currentUser.uid;
-  });
   let divs = $(".medDiv");
-  for (let i = 0; i < divs.length; i++) {
-    let current = divs[i];
-    let name = $(current).children(".medName").text();
-    console.log(name);
-    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
-  }
-    
-    medsRef.once("value").then(function (snap) {
-      snap.forEach(function (childSnap) { 
-        allMeds.push(childSnap.val());
-      });
-  });
   
-//  $(checkBox).change(function() {
+  for (let i = 0; i < divs.length; i++) {
+    var index;
+    var taken;
+    let current = divs[i];
+    let name = $(current).find(".specificMedName").text();
+    let box = $(current).find(".checkbox");
+    let time = $(current).parent().find("h3").text().toUpperCase();
+    
+    var userId = firebase.auth().currentUser.uid;
+    var medsRef = firebase.database().ref("/users/" + userId + "/meds/" + name);
+  
+    medsRef.once("value").then(function (snap) {
+      let times = snap.val().times;
+      taken = snap.val().isTaken;
+      index = $.inArray(time, times);
+        if (index > -1) {
+          $(box).prop("checked", taken[index]);
+        } else {
+          $(box).prop("checked", taken);
+        }
+    });
+  }
+  
+//  $(box).change(function() {
 //  if ($(this).is(":checked")) {
 //      firebase.auth().onAuthStateChanged(function(user){
-//        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
+//        firebase.database().ref("users/" + userId + "/meds/" + name).update( {
 //          "isTaken": true
 //        });
 //      });                                                                             
