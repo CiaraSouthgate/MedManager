@@ -462,3 +462,27 @@ header {
 .editIcon:hover, .deleteIcon:hover {
   cursor: pointer;
 }
+
+.lateAlert, .dueAlert {
+  font-size: 1.5em;
+  margin-right: 4px;
+  padding: 0;
+  display: none;
+}
+
+.lateAlert {
+  color: red;
+  padding: 0 8px;
+}
+
+.dueAlert {
+  color: orange;
+}
+
+.late .lateAlert{
+  display: inline;
+}
+
+.due .dueAlert{
+  display: inline;
+}

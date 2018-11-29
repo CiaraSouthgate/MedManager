@@ -9,7 +9,7 @@ $("#cancel").click(function() {
   resetTimes();
 });
 
-//Takes frequency, makes coordinating amount of time slots appear
+//Takes frequency of med, makes coordinating amount of time slots appear
 function populateTimes() {
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
@@ -275,6 +275,8 @@ function createMedDiv(med) {
   let edit = $("<i class='fas fa-pencil-alt'></i>");
   let deleteMed = $("<i class='fas fa-times'></i>");
   let name = $("<div></div>");
+  let lateAlert = $("<span></span>")
+  let dueAlert = $("<span></span>")
   let medName = $("<h2></h2>");
   let gen = $("<span></span>");
   let dosage = $("<p></p>");
@@ -284,9 +286,10 @@ function createMedDiv(med) {
   
   $(checkBox).attr("type", "checkbox");
   
-
   $(medName).append(med.medName);
   $(gen).append(med.genericName);
+  $(name).append(lateAlert);
+  $(name).append(dueAlert);
   $(name).append(medName);
   $(name).append(gen);
   $(dosage).append(med.strength + " " + med.unit);
@@ -302,6 +305,10 @@ function createMedDiv(med) {
   
   $(medDiv).addClass("medDiv");
   $(medName).css("display", "inline-block");
+  $(lateAlert).addClass("fas fa-exclamation");
+  $(lateAlert).addClass("lateAlert");
+  $(dueAlert).addClass("far fa-clock");
+  $(dueAlert).addClass("dueAlert");
   $(name).addClass("medName");
   $(gen).addClass("generic");
   $(medName).addClass("specificMedName");
@@ -322,8 +329,6 @@ function createMedDiv(med) {
   finally {
     $(medDiv).append(notes);
   }
-
-  
   
   if (med.asNeeded) {
     $("#asNeeded").append(medDiv);
@@ -354,17 +359,49 @@ function createMedDiv(med) {
     // var medIdentifier = "allMeds." + name;
     // alert(medIdentifier);
   });
-
 }
 
+function isLate() {
+  let divs = $(".medDiv");
+  let date = new Date();
+  let currentTime = date.getHours() * 60 + date.getMinutes();
+  
+  for (let i = 0; i < divs.length; i++) {
+    let current = divs[i];
+    let name = $(current).find(".specificMedName").text();
+    let box = $(current).find(".checkbox");
+    let time = $(current).parent().find("h3").text().toUpperCase();
+    if (time) {
+      let medTime = parseTime(time);
+      if (medTime[0] > 24) {
+        medTime[0] -= 24;
+      }
+      medTime = medTime[0] * 60 + medTime[1];
 
+      if (!($(box).is(":checked"))) {
+        if (currentTime > medTime) {
+          $(current).addClass("late");
+        } else if ((medTime - currentTime) < 30) {
+          $(current).addClass("due");
+        }
+      } else {
+        $(current).removeClass("late");
+        $(current).removeClass("due");
+      }
+    }
+  }
+  setTimeout(isLate, 60000);
+}
 
+//Sets checkboxes to isTaken value from database; updates database
+//when value is changed.
 function checkControl() {
   var index;
   var taken;
   let divs = $(".medDiv");
   var index;
   var taken;
+  var done = "wait";
   
   for (let i = 0; i < divs.length; i++) {
     let current = divs[i];
@@ -384,8 +421,10 @@ function checkControl() {
         } else {
           $(box).prop("checked", taken);
         }
+      
       updateBox(taken, index);
       
+      //Updates database with value of checkbox
       function updateBox(taken, index) {
         $(box).change(function() {
           if (index > -1) {
@@ -401,16 +440,19 @@ function checkControl() {
               taken = false;
             }
           }
+          
+          isLate();
 
           firebase.auth().onAuthStateChanged(function(user){
             firebase.database().ref("users/" + userId + "/meds/" + name ).update( {
               "isTaken": taken
             });
-          });                                                       
+          });
         });
       }
     });
   }
+  return;
 }
 
 //Clears meds from the page so it can be refreshed with an up-to-date list from the database
@@ -478,7 +520,7 @@ $("#logout").click(function() {
     var h = today.getHours();
     var suffix;
     if (h > 12) {
-      h = h - 12;
+      h -= 12;
       suffix = "PM";
     } else {
       suffix = "AM";
@@ -612,3 +654,5 @@ function greeting() {
  };
 
 greeting();
+
+setTimeout(isLate, 3000);
