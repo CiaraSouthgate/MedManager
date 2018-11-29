@@ -364,6 +364,7 @@ function createMedDiv(med) {
   });
 }
 
+<<<<<<< HEAD:js/home.js
 // Edit function
 function editMed(index) {
   $("#modal").css("display", "block");
@@ -434,11 +435,16 @@ $("#delete").click(function() {
   clearMeds();
   populateMeds();
 });
+=======
+
+>>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/js/home.js
 
 function checkControl() {
   var index;
   var taken;
   let divs = $(".medDiv");
+  var index;
+  var taken;
   
   for (let i = 0; i < divs.length; i++) {
     let current = divs[i];
@@ -458,24 +464,33 @@ function checkControl() {
         } else {
           $(box).prop("checked", taken);
         }
+      updateBox(taken, index);
+      
+      function updateBox(taken, index) {
+        $(box).change(function() {
+          if (index > -1) {
+            if ($(this).is(":checked")) {
+              taken[index] = true;
+            } else {
+              taken[index] = false;
+            }
+          } else {
+            if ($(this).is(":checked")) {
+              taken = true;
+            } else {
+              taken = false;
+            }
+          }
+
+          firebase.auth().onAuthStateChanged(function(user){
+            firebase.database().ref("users/" + userId + "/meds/" + name ).update( {
+              "isTaken": taken
+            });
+          });                                                       
+        });
+      }
     });
   }
-  
-//  $(box).change(function() {
-//  if ($(this).is(":checked")) {
-//      firebase.auth().onAuthStateChanged(function(user){
-//        firebase.database().ref("users/" + userId + "/meds/" + name).update( {
-//          "isTaken": true
-//        });
-//      });                                                                             
-//    } else {
-//      firebase.auth().onAuthStateChanged(function(user){
-//        firebase.database().ref("users/" + user.uid + "/meds/" + med.medName).update( {
-//          "isTaken": false
-//        });
-//      });
-//    }
-//  });
 }
 
 //Clears meds from the page so it can be refreshed with an up-to-date list from the database
@@ -662,3 +677,20 @@ function populatePharmacy() {
   $("#pharmMessage").css("display", "none");
   $("#pharmEdit").css("display", "inline-block");
 }
+
+function greeting() {
+  var firebase = app_firebase;
+  var welcome = document.getElementById("welcome");
+  var userName = "";
+
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user){
+      userName=user.displayName;
+    } else {
+      userName="test";
+    }
+        welcome.innerText = "Welcome, " + userName;
+    });
+ };
+
+greeting();
