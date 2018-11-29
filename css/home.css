@@ -97,8 +97,18 @@ input[type="radio"] {
   background-color: #259db2;
 }
 
+.container {
+  margin-top: 25px;
+}
+
 #welcome {
-  font-size: 18pt;
+  font-size: 22pt;
+  text-align: center;
+  top: 110px;
+}
+
+.message {
+  text-align: center;
 }
 
 #time {

@@ -408,7 +408,11 @@ $("#logout").click(function() {
     if (m < 10) {
       m = "0" + m;
     }
-    document.getElementById("time").innerHTML = h + ":" + m;
+    if (h >= 12) {
+      document.getElementById("time").innerHTML = h + ":" + m + " PM";
+    } else if (h < 12) {
+      document.getElementById("time").innerHTML = h + ":" + m + " AM";
+    }
     var t = setTimeout(startTime, 500);
   }
 
