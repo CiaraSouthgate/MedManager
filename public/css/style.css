@@ -241,3 +241,224 @@ input.button {
     width: 50px;
   }
 } 
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Add a Medication and Logout button*/
+#addMed, #logout, #pharmacy {
+  color: white;
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 16pt;
+  left: 0;
+  position: relative;
+  background: none;
+  border: none;
+  outline: 0;
+}
+
+#addMed {
+  background-color: #6ee5c7;
+  padding: 0.2em;
+  border-radius: 5px;
+  border: 2px solid #bef7e9;
+  margin: 0.1em;
+}
+
+#addMed:hover {
+  background-color: #bef7e9;
+  cursor: pointer;
+}
+
+#logout {
+  float: right;
+  font-size: 10pt;
+  margin-right: 1em;
+  margin-top: 1em;
+}
+
+#logout:hover, #pharmacy:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Modal */
+#modal-content h1 {
+  color: #017990;
+}
+#image {
+  height: 4em;
+  width: 4em;
+  /* border: 1px solid black; */
+  float: left;
+  margin: 0 0.5em 0.5em 0;
+  text-align: center;
+}
+
+#image i {
+  line-height: 1.2em;
+  font-size: 40pt;
+  color: #017990;
+}
+
+#drugName {
+  width: 75%;
+  height: 1.5em;
+  margin-bottom: 0.2em;
+  font-size: 16pt;
+}
+
+#genericName {
+  width: 100%;
+}
+#strength {
+  width: 9em;
+}
+
+#auxWarnings {
+  max-width: 100%;
+}
+
+#auxWarnings option {
+  font-size: 8pt;
+}
+
+input[type="radio"] {
+  margin-left: 0.5em !important;
+}
+
+.button {
+  margin-right: 0.1em !important;
+  outline: 0;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #259db2;
+}
+
+.container {
+  margin-top: -110px;
+}
+
+header {
+  top: 0;
+}
+
+#welcome {
+  font-size: 22pt;
+  text-align: center;
+  top: 110px;
+}
+
+.message {
+  margin-top: 110px;
+  text-align: center;
+}
+
+#time {
+  float: right;
+  font-size: 18pt;
+  padding: 10px;
+}
+
+.addButton {
+  padding: 0.5em;
+  background-color: #017990 !important;
+  color: #FFFFFF;
+  font-weight: 700;
+  border: 2px solid #259db2;
+}
+
+.addButton:hover {
+  background-color: #259db2 !important;
+}
+
+#modal, #pharmModal {
+  display: none;
+  position: fixed;
+  z-index: 5;
+  padding-top: 90px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+#modal-content, #pharmModal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 23em;
+  border-radius: 5px;
+  display: table;
+}
+
+/* Pharmacy info modal */
+#addNewPharm {
+  font-weight: 700;
+  color: #017990;
+}
+
+#addNewPharm:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#pharmEdit {
+  display: none;
+}
+
+#pharmForm {
+  display:none;
+}
+
+#cancelPharmEdit {
+  display: none;
+}
+
+.pharmInfoField {
+  width: 20em;
+}
+
+#pharmProv {
+  width: 8em;
+}
+
+#pharmPC {
+  width: 11.366em;
+}
+
+#pharmInfo h6 {
+  color: #7F7F7F;
+  margin: 0.2em 0 0 1em;
+}
+
+#pharmInfo p {
+  margin: 0 0 0em 2em;
+}
+
+#pharmInfo span {
+  margin: 0 1em;
+}
+
+/* Edit/Delete function */
+.editIcon {
+  margin: 0 0.5em 0 1em;
+}
+
+.editIcon, .deleteIcon {
+  color: #7F7F7F;
+  display: none;
+}
+
+.editIcon:hover, .deleteIcon:hover {
+  cursor: pointer;
+}
