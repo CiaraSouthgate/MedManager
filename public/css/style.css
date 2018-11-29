@@ -232,19 +232,6 @@ input.button {
   background-color: #249DB2 !important;
 }
 
-<<<<<<< HEAD:css/style.css
-=======
-@media only screen and (max-width: 500px) {
-  .buttontext {
-    display: none;
-  }
-  
-  #addMed {
-    width: 50px;
-  }
-} 
-
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
 * {
   box-sizing: border-box;
   margin: 0;
@@ -317,6 +304,7 @@ input.button {
 
 #genericName {
   width: 100%;
+  display: none;
 }
 #strength {
   width: 9em;
@@ -344,28 +332,8 @@ input[type="radio"] {
   background-color: #259db2;
 }
 
-<<<<<<< HEAD:css/style.css
 #welcome {
   font-size: 18pt;
-=======
-.container {
-  margin-top: -110px;
-}
-
-header {
-  top: 0;
-}
-
-#welcome {
-  font-size: 22pt;
-  text-align: center;
-  top: 110px;
-}
-
-.message {
-  margin-top: 110px;
-  text-align: center;
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
 }
 
 #time {
@@ -380,21 +348,14 @@ header {
   color: #FFFFFF;
   font-weight: 700;
   border: 2px solid #259db2;
-<<<<<<< HEAD:css/style.css
   outline: 0;
-=======
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
 }
 
 .addButton:hover {
   background-color: #259db2 !important;
 }
 
-<<<<<<< HEAD:css/style.css
 #modal, #pharmModal, #deleteModal {
-=======
-#modal, #pharmModal {
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
   display: none;
   position: fixed;
   z-index: 5;
@@ -407,18 +368,14 @@ header {
   background-color: rgba(0,0,0,0.4);
 }
 
-<<<<<<< HEAD:css/style.css
 #modal-content, #pharmModal-content, #deleteModal-content {
-=======
-#modal-content, #pharmModal-content {
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 23em;
   border-radius: 5px;
-  display: table;
+  /* display: none; */
 }
 
 /* Pharmacy info modal */
@@ -481,7 +438,6 @@ header {
 
 .editIcon:hover, .deleteIcon:hover {
   cursor: pointer;
-<<<<<<< HEAD:css/style.css
 }
 
 /* Delete function popup */
@@ -496,6 +452,4 @@ header {
   #pharmText, #logoutText {
     display: none
   }
-=======
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/css/style.css
 }

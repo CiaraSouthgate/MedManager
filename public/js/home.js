@@ -16,9 +16,9 @@ $("#cancel").click(function() {
 // Hides or shows the genetic name field depending on if the "generic" or "brand name" radio button is selected
 $("input[name='genericOrBrand'").change(function() {
   if ($('#generic').prop('checked')) {
-    $("#genericName").css("display", "initial");
-  } else if ($('#brandName').prop('checked')) {
     $("#genericName").css("display", "none");
+  } else if ($('#brandName').prop('checked')) {
+    $("#genericName").css("display", "initial");
   }
 });
 
@@ -364,7 +364,6 @@ function createMedDiv(med) {
   });
 }
 
-<<<<<<< HEAD:js/home.js
 // Edit function
 function editMed(index) {
   $("#modal").css("display", "block");
@@ -435,9 +434,6 @@ $("#delete").click(function() {
   clearMeds();
   populateMeds();
 });
-=======
-
->>>>>>> cb4c33fdb31696bc7a80925053646ec1afc60825:public/js/home.js
 
 function checkControl() {
   var index;
