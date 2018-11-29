@@ -231,3 +231,13 @@ input.button {
 .firebaseui-button:hover {
   background-color: #249DB2 !important;
 }
+
+@media only screen and (max-width: 500px) {
+  .buttontext {
+    display: none;
+  }
+  
+  #addMed {
+    width: 50px;
+  }
+} 
