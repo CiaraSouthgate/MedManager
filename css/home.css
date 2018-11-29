@@ -99,8 +99,6 @@ input[type="radio"] {
 
 #welcome {
   font-size: 18pt;
-  
-  
 }
 
 #time {
@@ -115,13 +113,14 @@ input[type="radio"] {
   color: #FFFFFF;
   font-weight: 700;
   border: 2px solid #259db2;
+  outline: 0;
 }
 
 .addButton:hover {
   background-color: #259db2 !important;
 }
 
-#modal, #pharmModal {
+#modal, #pharmModal, #deleteModal {
   display: none;
   position: fixed;
   z-index: 5;
@@ -134,7 +133,7 @@ input[type="radio"] {
   background-color: rgba(0,0,0,0.4);
 }
 
-#modal-content, #pharmModal-content {
+#modal-content, #pharmModal-content, #deleteModal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -204,4 +203,12 @@ input[type="radio"] {
 
 .editIcon:hover, .deleteIcon:hover {
   cursor: pointer;
+}
+
+/* Delete function popup */
+#deleteModal-content h2 {
+  color: #017990;
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
 }

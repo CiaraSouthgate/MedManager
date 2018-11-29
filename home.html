@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/home.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/home.css"> -->
   </head>
   <body onload="startTime()">
     <header>
@@ -20,8 +20,8 @@
     </header>
     <aside>
       <button id="addMed"><i class="fas fa-plus"></i> Add a Medication</button>
-      <button id="pharmacy"><i class="fas fa-file-prescription"></i>Pharmacy</button>
-      <button id="logout"><i class="fas fa-door-open"></i>Log Out</button>
+      <button id="pharmacy"><i class="fas fa-file-prescription"></i><span id="pharmText">Pharmacy</span></button>
+      <button id="logout"><i class="fas fa-door-open"></i><span id="logoutText">Log Out</span></button>
     </aside>
     <button id="test">Magical Test Button!</button>
     <div id="background"></div>
@@ -47,6 +47,7 @@
         </div>
       </div>
     </div>
+
     <div id="modal">
         <div id="modal-content">
             <h1>Add a medication</h1>
@@ -82,11 +83,6 @@
                   <option value="8">8</option>
                 </select>
               <span> time(s) per day</span><br/>
-              <!-- <select id="timeUnit" name="timeUnit">
-                  <option value="day" selected>day</option>
-                  <option value="week">week</option>
-                  <option value="month">month</option>
-                </select><br/> -->
               <span>Dosing times </span><input type="checkbox" id="medAsNeeded" name="asNeeded"><span> as needed</span><br/>
               <div id="times">
                 <div class='timeSlot'><input class="timepicker" placeholder="8:00 AM" readonly></div>
@@ -109,10 +105,10 @@
               <input type="reset" value="Reset" class="button" id="reset">
               <input type="reset" value="Cancel" class="button" id="cancel">
               <input type="submit" value="ADD" class="button addButton" id="add">
-              <!-- <input type="submit" value="ADD and close" class="button addButton" id="addClose"> -->
             </form>
         </div>
     </div>
+
     <div id="pharmModal">
       <div id="pharmModal-content">
         <h1>Pharmacy</h1>
@@ -131,7 +127,16 @@
           <input type="submit" id="pharmAdd" class="addButton" value="Submit">
         </form>
         <input type="reset" id="pharmClose" class="button" value="Close">
-        <input type="button" id="pharmEdit" class="button" value="Edit">
+        <input type="button" id="pharmEdit" class="addButton" value="EDIT">
+      </div>
+    </div>
+
+    <div id="deleteModal">
+      <div id="deleteModal-content">
+        <h2>Delete a medication</h2>
+        <p>Are you sure you want to delete <span id="deleteMedName"></span>?</p>
+        <input type="reset" id="deleteClose" class="button" value="Close">
+        <input type="button" id="delete" class="addButton" value="DELETE">
       </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
