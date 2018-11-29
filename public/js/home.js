@@ -159,7 +159,7 @@ $("#medForm").submit(function(e) {
 
 function resetTimes() {
   $("#times").html("");
-  $("#frequency option:selected").text("1");
+  $("#frequency option[value='1']").attr("selected", "selected");
   populateTimes();
 }
 
@@ -424,9 +424,10 @@ function editMed(index) {
     $("#generic").prop("unchecked", false);
   }
 
-  populateTimes();
+  // $("#frequency").val(allMeds[index].frequency).change();
+  $("#frequency option[value='" + allMeds[index].frequency +"']").attr("selected","selected");
 
-  $("#frequency").val(allMeds[index].frequency);
+  populateTimes();
 
   if (allMeds[index].times != undefined) {
     var timepickers = $(".timepicker");
