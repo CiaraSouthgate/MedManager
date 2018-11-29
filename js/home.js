@@ -360,6 +360,8 @@ function createMedDiv(med) {
 
 
 function checkControl() {
+  var index;
+  var taken;
   let divs = $(".medDiv");
   var index;
   var taken;
