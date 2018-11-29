@@ -389,7 +389,7 @@ function isLate() {
       }
     }
   }
-  setTimeout(isLate, 60000);
+  setTimeout(isLate, 30000);
 }
 
   $(".deleteIcon").click(function() {
@@ -478,8 +478,6 @@ $("#delete").click(function() {
 //Sets checkboxes to isTaken value from database; updates database
 //when value is changed.
 function checkControl() {
-  var index;
-  var taken;
   let divs = $(".medDiv");
   var index;
   var taken;

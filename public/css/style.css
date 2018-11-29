@@ -469,6 +469,10 @@ input[type="radio"] {
   margin-left: 2em;
 }
 
+.door {
+  font-size: 16pt;
+}
+
 /* Delete function popup */
 #deleteModal-content h2 {
   color: #017990;
