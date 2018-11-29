@@ -24,7 +24,7 @@ $("input[name='genericOrBrand'").change(function() {
 
 //Takes frequency of med, makes coordinating amount of time slots appear
 function populateTimes() {
-  $("#times").html("");
+  $("#times").empty();
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
   for (let i = 1; i <= dosingTimes; i++) {
@@ -155,6 +155,10 @@ $("#medForm").submit(function(e) {
   e.preventDefault();
   $("#modal").css("display", "none");
   addMeds();
+  $("#drugName").val("");
+  $("#genericName").val("");
+  $("#strength").val("");
+  resetTimes();
 });
 
 function resetTimes() {
@@ -356,7 +360,21 @@ function createMedDiv(med) {
         index = i;
       }
     }
+    resetTimes();
+    populateTimes();
     editMed(index);
+  });
+
+  $(".deleteIcon").click(function() {
+    var name = $(this).parent().find("h2").text();
+    var index;
+    for (let i = 0; i < allMeds.length; i++) {
+      if (allMeds[i].medName == name) {
+        index = i;
+      }
+    }
+    medToDelete = allMeds[index].medName;
+    deleteAMed();
   });
 }
 
@@ -392,18 +410,6 @@ function isLate() {
   setTimeout(isLate, 30000);
 }
 
-  $(".deleteIcon").click(function() {
-    var name = $(this).parent().find("h2").text();
-    var index;
-    for (let i = 0; i < allMeds.length; i++) {
-      if (allMeds[i].medName == name) {
-        index = i;
-      }
-    }
-    medToDelete = allMeds[index].medName;
-    deleteAMed();
-  });
-
 // Edit function
 function editMed(index) {
   $("#modal").css("display", "block");
@@ -417,21 +423,20 @@ function editMed(index) {
   $("#unit").val(allMeds[index].unit);
 
   if (allMeds[index].genericOrBrand == "generic") {
-    $("#generic").prop("checked", true);
-    $("#brandName").prop("checked", false);
+    $("#generic").prop("checked", true).change();
+    $("#brandName").prop("checked", false).change();
   } else {
-    $("#brandName").prop("checked", true);
-    $("#generic").prop("unchecked", false);
+    $("#brandName").prop("checked", true).change();
+    $("#generic").prop("unchecked", false).change();
   }
 
-  // $("#frequency").val(allMeds[index].frequency).change();
-  $("#frequency option[value='" + allMeds[index].frequency +"']").attr("selected","selected");
+  $("#frequency").val(allMeds[index].frequency).change();
 
   populateTimes();
 
   if (allMeds[index].times != undefined) {
     var timepickers = $(".timepicker");
-    for (let i = 1; i < timepickers.length; i++) {
+    for (let i = 0; i < timepickers.length; i++) {
       $(timepickers[i]).val(allMeds[index].times[i]);
     }
   }
