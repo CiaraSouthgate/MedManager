@@ -403,7 +403,6 @@ function isLate() {
     medToDelete = allMeds[index].medName;
     deleteAMed();
   });
-}
 
 // Edit function
 function editMed(index) {
