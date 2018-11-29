@@ -31,7 +31,7 @@ header {
   display: block;
   clear: both;
   position: fixed;
-  z-index: 10;
+  z-index: 2;
 }
 
 img.icon {
@@ -75,7 +75,7 @@ aside {
   min-height: 25px;
   position: fixed;
   top: 60px;
-  z-index: 10;
+  z-index: 2;
 }
 
 aside a {
@@ -232,16 +232,6 @@ input.button {
   background-color: #249DB2 !important;
 }
 
-@media only screen and (max-width: 500px) {
-  .buttontext {
-    display: none;
-  }
-  
-  #addMed {
-    width: 50px;
-  }
-} 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -314,6 +304,7 @@ input.button {
 
 #genericName {
   width: 100%;
+  display: none;
 }
 #strength {
   width: 9em;
@@ -341,23 +332,8 @@ input[type="radio"] {
   background-color: #259db2;
 }
 
-.container {
-  margin-top: -110px;
-}
-
-header {
-  top: 0;
-}
-
 #welcome {
-  font-size: 22pt;
-  text-align: center;
-  top: 110px;
-}
-
-.message {
-  margin-top: 110px;
-  text-align: center;
+  font-size: 18pt;
 }
 
 #time {
@@ -372,13 +348,14 @@ header {
   color: #FFFFFF;
   font-weight: 700;
   border: 2px solid #259db2;
+  outline: 0;
 }
 
 .addButton:hover {
   background-color: #259db2 !important;
 }
 
-#modal, #pharmModal {
+#modal, #pharmModal, #deleteModal {
   display: none;
   position: fixed;
   z-index: 5;
@@ -391,14 +368,14 @@ header {
   background-color: rgba(0,0,0,0.4);
 }
 
-#modal-content, #pharmModal-content {
+#modal-content, #pharmModal-content, #deleteModal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 23em;
   border-radius: 5px;
-  display: table;
+  /* display: none; */
 }
 
 /* Pharmacy info modal */
@@ -463,6 +440,7 @@ header {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .lateAlert, .dueAlert {
   font-size: 1.5em;
   margin-right: 4px;
@@ -485,4 +463,18 @@ header {
 
 .due .dueAlert{
   display: inline;
+=======
+/* Delete function popup */
+#deleteModal-content h2 {
+  color: #017990;
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 500px) {
+  #pharmText, #logoutText {
+    display: none
+  }
+>>>>>>> 26df7f9689586f09c86fa829aaff605fe9ba73c8
 }
