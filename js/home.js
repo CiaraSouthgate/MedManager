@@ -1,6 +1,10 @@
 // Makes add med window appear
 $("#addMed").click(function() {
   $("#modal").css("display", "block");
+  $("#modal-content h1").text("Add a medication");
+  $("#add").val("ADD");
+  $("#reset").css("display", "inline-block");
+  $("#drugName").prop("readonly", false);
 });
 
 // Makes add med window disappear
@@ -9,8 +13,18 @@ $("#cancel").click(function() {
   resetTimes();
 });
 
+// Hides or shows the genetic name field depending on if the "generic" or "brand name" radio button is selected
+$("input[name='genericOrBrand'").change(function() {
+  if ($('#generic').prop('checked')) {
+    $("#genericName").css("display", "initial");
+  } else if ($('#brandName').prop('checked')) {
+    $("#genericName").css("display", "none");
+  }
+});
+
 //Takes frequency, makes coordinating amount of time slots appear
 function populateTimes() {
+  $("#times").html("");
   var dosingTimes = 0;
   dosingTimes = $("#frequency option:selected").text();
   for (let i = 1; i <= dosingTimes; i++) {
@@ -19,6 +33,7 @@ function populateTimes() {
   enableTimepicker();
 }
 
+// When the frequency pulldown is changed, repopulates modal with the required amount of med time fields
 $("#frequency").change(function() {
   $("#times").html("");
   $("#frequency option:selected").each(function() {
@@ -59,6 +74,7 @@ enableTimepicker();
 
 var database = firebase.database();
 
+// Array other functions use to get data
 var allMeds = [];
 
 // Draws list of meds from database and populates page
@@ -85,7 +101,6 @@ function addMeds(){
   var strength = $("#strength").val();
   var unit = $("#unit").val();
   var frequency = $("#frequency").val();
-  var timeUnit = $("#timeUnit").val();
   var auxWarnings = $("#auxWarnings").val();
   var times = [];
   var isTaken = [];
@@ -134,27 +149,6 @@ function checkMeds() {
   }
   return false;
 }
-
-// // Prompts user if they want to overwrite a med if it already exists
-// // Adds a med, doesn't close window. 
-// $("#add").click(function(e) {
-//   // e.preventDefault();
-//   if (checkMeds()) {
-//     alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
-//   }
-//   addMeds();
-// });
-
-// // Prompts user if they want to overwrite a med if it already exists
-// // Adds a med, closes window. 
-// $("#addClose").click(function(e) {
-//   e.preventDefault();
-//   if (checkMeds()) {
-//     alert("Medication already exists in your schedule. Overwrite?"); //Will change this to an actual window that does something rather than an alert
-//   }
-//   addMeds();
-//   $("#modal").css("display", "none");
-// });
 
 // Submits med form to database
 $("#medForm").submit(function(e) {
@@ -256,6 +250,7 @@ function createTimeDivs() {
   }
 }
 
+// Auxiliary warnings
 var warnings = {
   takeWithFood: "Take with food",
   takeEmptyStomach: "Take on an empty stomach",
@@ -283,7 +278,6 @@ function createMedDiv(med) {
   let checkBox = $("<input></input>");
   
   $(checkBox).attr("type", "checkbox");
-  
 
   $(medName).append(med.medName);
   $(gen).append(med.genericName);
@@ -322,8 +316,6 @@ function createMedDiv(med) {
   finally {
     $(medDiv).append(notes);
   }
-
-  
   
   if (med.asNeeded) {
     $("#asNeeded").append(medDiv);
@@ -347,15 +339,101 @@ function createMedDiv(med) {
     $(this).find(".editIcon").css("display", "none");
     $(this).find(".deleteIcon").css("display", "none");
   });
+  
   $(".editIcon").click(function() {
-    // alert($(".medName").text());
-    // var name = $(this).parent().find("h2").text();
-    // console.log("This drug's name is: " + name);
-    // var medIdentifier = "allMeds." + name;
-    // alert(medIdentifier);
+    var name = $(this).parent().find("h2").text();
+    var index;
+    for (let i = 0; i < allMeds.length; i++) {
+      if (allMeds[i].medName == name) {
+        index = i;
+      }
+    }
+    editMed(index);
   });
 
+  $(".deleteIcon").click(function() {
+    var name = $(this).parent().find("h2").text();
+    var index;
+    for (let i = 0; i < allMeds.length; i++) {
+      if (allMeds[i].medName == name) {
+        index = i;
+      }
+    }
+    medToDelete = allMeds[index].medName;
+    deleteAMed();
+  });
 }
+
+// Edit function
+function editMed(index) {
+  $("#modal").css("display", "block");
+  $("#modal-content h1").text("Edit a medication");
+  $("#add").val("EDIT");
+  $("#reset").css("display", "none");
+  $("#drugName").val(allMeds[index].medName);
+  $("#drugName").prop("readonly", true);
+  $("#genericName").val(allMeds[index].genericName);
+  $("#strength").val(allMeds[index].strength);
+  $("#unit").val(allMeds[index].unit);
+
+  if (allMeds[index].genericOrBrand == "generic") {
+    $("#generic").prop("checked", true);
+    $("#brandName").prop("checked", false);
+  } else {
+    $("#brandName").prop("checked", true);
+    $("#generic").prop("unchecked", false);
+  }
+
+  populateTimes();
+
+  $("#frequency").val(allMeds[index].frequency);
+
+  if (allMeds[index].times != undefined) {
+    var timepickers = $(".timepicker");
+    for (let i = 1; i < timepickers.length; i++) {
+      $(timepickers[i]).val(allMeds[index].times[i]);
+    }
+  }
+
+  if (allMeds[index].asNeeded === true) {
+    $("#medAsNeeded").prop("checked", true);
+    $("#times").html("");
+    medAsNeeded = true;
+  }
+  if (allMeds[index].auxWarnings != undefined) {
+    for (let i = 0; i < allMeds[index].auxWarnings.length; i++) {
+      $("#auxWarnings").val(allMeds[index].auxWarnings[i]).prop("checked", true);
+    }
+  }
+}
+
+var medToDelete;
+
+// Delete function
+function deleteAMed() {
+  $("#deleteModal").css("display", "block");
+  $("#deleteMedName").text(medToDelete);
+}
+
+$("#deleteClose").click(function() {
+  $("#deleteModal").css("display", "none");
+});
+
+// Removes med from database
+$("#delete").click(function() {
+  $("#deleteModal").css("display", "none");
+  var userId = firebase.auth().currentUser.uid;
+  var medsRef = firebase.database().ref("/users/" + userId + "/meds/" +   medToDelete)
+  medsRef.remove();
+  // Removes med from the allMeds array as well as database
+  for (let i = 0; i < allMeds.length; i++) {
+    if (allMeds[i].medName == medToDelete) {
+      allMeds.splice(i, 1);
+    }
+  }
+  clearMeds();
+  populateMeds();
+});
 
 function checkControl() {
   var index;
@@ -504,6 +582,7 @@ $("#cancelAddNewPharm").click(function() {
   $("#pharmMessage").css("display", "block");
 });
 
+// Edits pharmacy information in database
 $("#pharmEdit").click(function() {
   $("#pharmForm").css("display", "block");
   $("#pharmInfo").css("display", "none");
@@ -527,6 +606,7 @@ $("#cancelPharmEdit").click(function() {
   $("#pharmEdit").css("display", "inline-block");
 });
 
+// Sends pharmacy information to database, changes information in pharmacy modal
 $("#pharmForm").submit(function(e) {
   e.preventDefault();
   $("#pharmForm").css("display", "none");
