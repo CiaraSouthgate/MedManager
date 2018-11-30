@@ -407,7 +407,7 @@ function isLate() {
       }
     }
   }
-  setTimeout(isLate, 30000);
+  setTimeout(isLate, 1000);
 }
 
 // Edit function
@@ -619,7 +619,7 @@ $("#logout").click(function() {
       m = "0" + m;
     }
     document.getElementById("time").innerHTML = h + ":" + m + " " + suffix;
-    var t = setTimeout(startTime, 500);
+    var t = setTimeout(startTime, 1000);
   }
 
 // Pharmacy info window controls
@@ -743,4 +743,4 @@ function greeting() {
 
 greeting();
 
-setTimeout(isLate, 3000);
+setTimeout(isLate, 1000);
