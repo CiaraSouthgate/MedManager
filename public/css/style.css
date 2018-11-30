@@ -95,7 +95,7 @@ aside a:hover {
   margin: auto;
   padding: 10px;
   position: relative;
-  top: 100px;
+  top: 85px;
 }
 
 div.period {
@@ -471,6 +471,12 @@ input[type="radio"] {
 
 .door {
   font-size: 16pt;
+}
+
+#message {
+  position: relative;
+  text-align: center;
+  top: 85px;
 }
 
 /* Delete function popup */
