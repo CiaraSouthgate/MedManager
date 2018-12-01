@@ -398,7 +398,7 @@ function isLate() {
       if (!($(box).is(":checked"))) {
         if (currentTime > medTime) {
           $(current).addClass("late");
-        } else if ((medTime - currentTime) < 30) {
+        } else if ((medTime - currentTime) <= 30) {
           $(current).addClass("due");
         }
       } else {
