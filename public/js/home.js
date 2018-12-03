@@ -10,6 +10,7 @@ $("#addMed").click(function() {
 // Makes add med window disappear
 $("#cancel").click(function() {
   $("#modal").css("display", "none");
+  $("#auxWarnings option:selected").removeAttr("selected");
   resetTimes();
 });
 
@@ -158,6 +159,7 @@ $("#medForm").submit(function(e) {
   $("#drugName").val("");
   $("#genericName").val("");
   $("#strength").val("");
+  $("#auxWarnings option:selected").removeAttr("selected");
   resetTimes();
 });
 
@@ -414,6 +416,7 @@ function editMed(index) {
     $("#times").html("");
     medAsNeeded = true;
   }
+
   if (allMeds[index].auxWarnings != undefined) {
     for (let i = 0; i < allMeds[index].auxWarnings.length; i++) {
       $("#auxWarnings option[value=" + allMeds[index].auxWarnings[i] + "]").attr("selected", true);
