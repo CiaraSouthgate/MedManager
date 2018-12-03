@@ -378,38 +378,6 @@ function createMedDiv(med) {
   });
 }
 
-function isLate() {
-  let divs = $(".medDiv");
-  let date = new Date();
-  let currentTime = date.getHours() * 60 + date.getMinutes();
-  
-  for (let i = 0; i < divs.length; i++) {
-    let current = divs[i];
-    let name = $(current).find(".specificMedName").text();
-    let box = $(current).find(".checkbox");
-    let time = $(current).parent().find("h3").text().toUpperCase();
-    if (time) {
-      let medTime = parseTime(time);
-      if (medTime[0] > 24) {
-        medTime[0] -= 24;
-      }
-      medTime = medTime[0] * 60 + medTime[1];
-
-      if (!($(box).is(":checked"))) {
-        if (currentTime > medTime) {
-          $(current).addClass("late");
-        } else if ((medTime - currentTime) <= 30) {
-          $(current).addClass("due");
-        }
-      } else {
-        $(current).removeClass("late");
-        $(current).removeClass("due");
-      }
-    }
-  }
-  setTimeout(isLate, 1000);
-}
-
 // Edit function
 function editMed(index) {
   $("#modal").css("display", "block");
@@ -448,7 +416,7 @@ function editMed(index) {
   }
   if (allMeds[index].auxWarnings != undefined) {
     for (let i = 0; i < allMeds[index].auxWarnings.length; i++) {
-      $("#auxWarnings").val(allMeds[index].auxWarnings[i]).prop("checked", true);
+      $("#auxWarnings option[value=" + allMeds[index].auxWarnings[i] + "]").attr("selected", true);
     }
   }
 }
@@ -480,6 +448,39 @@ $("#delete").click(function() {
   clearMeds();
   populateMeds();
 });
+
+// Flags meds that are comining up or overdue
+function isLate() {
+  let divs = $(".medDiv");
+  let date = new Date();
+  let currentTime = date.getHours() * 60 + date.getMinutes();
+  
+  for (let i = 0; i < divs.length; i++) {
+    let current = divs[i];
+    let name = $(current).find(".specificMedName").text();
+    let box = $(current).find(".checkbox");
+    let time = $(current).parent().find("h3").text().toUpperCase();
+    if (time) {
+      let medTime = parseTime(time);
+      if (medTime[0] > 24) {
+        medTime[0] -= 24;
+      }
+      medTime = medTime[0] * 60 + medTime[1];
+
+      if (!($(box).is(":checked"))) {
+        if (currentTime > medTime) {
+          $(current).addClass("late");
+        } else if ((medTime - currentTime) <= 30) {
+          $(current).addClass("due");
+        }
+      } else {
+        $(current).removeClass("late");
+        $(current).removeClass("due");
+      }
+    }
+  }
+  setTimeout(isLate, 1000);
+}
 
 //Sets checkboxes to isTaken value from database; updates database
 //when value is changed.
