@@ -14,7 +14,11 @@ Contents:
 - Bootstrap
 
 /public (static files for Firebase Deployment)
+
 ./css -  CSS files
+
 ./images - image files
+
 ./js - Javascript files
+
 - html files for each page
