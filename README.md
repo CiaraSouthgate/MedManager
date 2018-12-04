@@ -1,5 +1,7 @@
 #MedManager
+
 BCIT Computer Systems Technology - COMP 1930 Team 1 Group Project
+
 A web app that allows users to log in and create individual daily medication schedules that remind them when various medications are coming up or overdue. Also stores and presents pharmacy contact information. Uses Firebase for database management.
 
 Contents:
