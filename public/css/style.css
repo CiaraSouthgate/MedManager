@@ -18,7 +18,10 @@ body.login {
   bottom: 0;
   width: 100%;
   background-image: url(../images/backgroundlarge.jpg);
-  background-size: 1600px;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom left;
   position: fixed;
