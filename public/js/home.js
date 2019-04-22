@@ -622,6 +622,7 @@ $("#logout").click(function() {
     if (m < 10) {
       m = "0" + m;
     }
+    
     document.getElementById("time").innerHTML = h + ":" + m + " " + suffix;
     var t = setTimeout(startTime, 1000);
   }
